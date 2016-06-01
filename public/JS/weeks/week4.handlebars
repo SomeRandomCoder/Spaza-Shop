@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Week 4 Statistics </title>
+
+  </head>
+  <body>
+  
+
+  <h1 class="heading"> WEEK 4:</h1>
+  <ul id="statistics">
+    <li class="col-md-8">Most Popular Product :</li><li class="col-md-4"> {{mostPopularProduct}}</li>
+    <li class="col-md-8">Most Popular Category:</li> <li class="col-md-4">{{mostPopularCategory}}</li>
+    <li class="col-md-8">Most Profitable Product: </li><li class="col-md-4">{{mostProfitableProduct}}</li>
+    <li class="col-md-8">Most Profitable Category:</li><li class="col-md-4"> {{mostProfitableCategory}}</li>
+
+    <li class="col-md-8">Least Popular Product:</li><li class="col-md-4"> {{leastPopularProduct}}</li>
+    <li class="col-md-8">Least Popular Category:</li><li class="col-md-4"> {{leastPopularCategory}}</li>
+
+      <li class="heading"> Sales: </li> <li> {{#each weeklySales}}<li id="sales">{{stockItem}}: {{sold}}</li> {{/each}}</li>
+  </ul><a id="HomeLink" class="btn btn-primary" href="/"> Home </a>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="JS/bootstrap.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,100 @@
+.btn{
+    background-color: #FF66CC; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+.btn-info {
+    background-color: #FF66CC; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+.image-div{
+  width: 50%;
+  height:100%;
+  text-align: center;
+  border-color: black;
+  border-width: 2px;
+  border-style:double;
+  border-radius: 20px;
+  margin-left: 25%;
+  margin-bottom : 10px;
+  margin-right: 25%;
+  padding-bottom: 2%;
+  padding-top: 2%;
+}
+
+.main-div{
+  width: 50%;
+  height:100%;
+  text-align: center;
+  border-color: black;
+  border-width: 2px;
+  border-style:double;
+  border-radius: 20px;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding-bottom: 2%;
+  padding-top: 2%;
+  background-color: transparent;
+}
+.body{
+  /*background-color: #AFB5B5;*/
+  background: linear-gradient(to right,red, yellow);
+}
+
+.Picture{
+  width: 50%;
+  height:100%;
+  text-align: center;
+  /*border-color: black;*/
+  /*border-width: 2px;*/
+  /*border-style:double;*/
+  /*border-radius: 20px;*/
+  margin-left: 25%;
+  margin-bottom : 10px;
+  margin-right: 25%;
+  padding-bottom: 2%;
+  padding-top: 2%;
+}
+#heading{
+  width: 50%;
+  height:100%;
+  text-align: center;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding-bottom: 2%;
+  padding-top: 2%;
+}
+
+#body{
+  background: linear-gradient(to right,red, yellow);
+  /*background-color: #AFB5B5;*/
+}
+#tradingHours{
+  width: 50%;
+  height:100%;
+  text-align: center;
+  border-color: black;
+  border-width: 2px;
+  border-style:double;
+  border-radius: 20px;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding-bottom: 2%;
+  padding-top: 2%;
+  background-color: transparent;
+}
