@@ -13,6 +13,21 @@ var mostPopularCategory = require('./functions/mostPopularCategory');
 var leastPopularCategory = require('./functions/leastPopularCategory');
 var mostProfitableProduct = require('./functions/mostProfitableProduct');
 var mostProfitableCategory = require("./functions/mostProfitableCategory");
+var categories = require("./functions/mostPopularCategory");
+
+var stockItems = [];
+var AmountSold = [];
+var Total=[];
+var Categories = [];
+
+//PRODUCTS
+for(var x = 0; x < categories.length; x++){
+stockItems.push(categories.StockItem[x]);
+Categories.push(categories.category[x]);
+}
+
+console.log(stockItems);
+console.log(Categories);
 
 
 var week1 = {
@@ -89,7 +104,24 @@ var dbOptions = {
   port: 3000,
 };
 
-app.use(myConnection(mysql, dbOptions, "single"));
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: "mxmaolqk",
+  database: 'nelisaDB'
+});
+
+connection.connect();
+
+connection.query('SELECT * FROM sales', function(err, rows, fields){
+  if(err) throw err;
+
+  console.log('Sales are as follows:' + stockItems);
+});
+connection.end();
+
+
+// app.use(myConnection(mysql, dbOptions, "single"));
 
 app.engine("handlebars", handlebars({
   defaultLayout: "main"
