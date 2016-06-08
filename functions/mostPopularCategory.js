@@ -4,7 +4,7 @@ var fs = require("fs");
 exports.popularCatergory = function(week){
   var weeklySales1 = weeklySales.weeklySales(week);
 
-  var file = fs.readFileSync("./CSV/catagories.csv", "utf8");
+  var file = fs.readFileSync("../CSV/catagories.csv", "utf8");
   var files = file.replace(/Product,Category\n/g, "").replace(/\n/g, ",").split(",");
 
   category = file.replace("Product,Category\n", "");
@@ -23,6 +23,8 @@ exports.popularCatergory = function(week){
 
     }
   }
+  console.log(categories);
+
   var popularCatergoryWeek1=[];
 
   for(var i =0; i< categories.length; i++){

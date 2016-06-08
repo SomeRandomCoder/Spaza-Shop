@@ -14,30 +14,33 @@ var leastPopularCategory = require('./functions/leastPopularCategory');
 var mostProfitableProduct = require('./functions/mostProfitableProduct');
 var mostProfitableCategory = require("./functions/mostProfitableCategory");
 var categories = require("./functions/mostPopularCategory");
-
-var stockItems = [];
-var AmountSold = [];
-var Total=[];
-var Categories = [];
-
-//PRODUCTS
-for(var x = 0; x < categories.length; x++){
-stockItems.push(categories.StockItem[x]);
-Categories.push(categories.category[x]);
-}
-
-console.log(stockItems);
-console.log(Categories);
+var bought = require("./functions/mostProfitableCategory");
 
 
-var week1 = {
-  mostPopularProduct: mostPopularProduct.mostPopularProduct(1),
-  leastPopularProduct: leastPopularProduct.leastPopularProducts(1),
-  mostPopularCategory: mostPopularCategory.popularCatergory(1),
-  leastPopularCategory: leastPopularCategory.leastPopularCatergory(1),
-  mostProfitableProduct: mostProfitableProduct.mostProfitableProduct(1),
-  mostProfitableCategory: mostProfitableCategory.mostProfitableCategory(1)
-};
+var Purchases=[];
+Purchases.push(mostProfitableCategory().bought);
+console.log(Purchases);
+
+
+
+
+
+
+//===========================================================================
+//MUST REFACTOR CODE BELOW!!!
+//===========================================================================
+
+
+    var week1 = {
+      mostPopularProduct: mostPopularProduct.mostPopularProduct(1),
+      leastPopularProduct: leastPopularProduct.leastPopularProducts(1),
+      mostPopularCategory: mostPopularCategory.popularCatergory(1),
+      leastPopularCategory: leastPopularCategory.leastPopularCatergory(1),
+      mostProfitableProduct: mostProfitableProduct.mostProfitableProduct(1),
+      mostProfitableCategory: mostProfitableCategory.mostProfitableCategory(1)
+    };
+
+
 
 var week2 = {
   mostPopularProduct: mostPopularProduct.mostPopularProduct(2),
@@ -65,10 +68,23 @@ var week4 = {
   mostProfitableProduct: mostProfitableProduct.mostProfitableProduct(4),
   mostProfitableCategory: mostProfitableCategory.mostProfitableCategory(4)
 };
+//===========================================================================
 
 app.get("/homePage", function(req, res) {
   res.render("homePage");
 });
+
+// app.get('/api/products', function(req, res) {
+//   connection.connect();
+//
+//   connection.query('SELECT * FROM purchases', function(err, rows, bought){
+//     if(err) throw err;
+//     console.log(fields);
+//     res.render('page', {products: field})
+//     // console.log('Sales are as follows:' + stockItems);
+//   });
+//   connection.end();
+// });
 
 app.get("/index", function(req, res) {
   res.render("index");
@@ -116,7 +132,7 @@ connection.connect();
 connection.query('SELECT * FROM sales', function(err, rows, fields){
   if(err) throw err;
 
-  console.log('Sales are as follows:' + stockItems);
+  // console.log('Sales are as follows:' + stockItems);
 });
 connection.end();
 
