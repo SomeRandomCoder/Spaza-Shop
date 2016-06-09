@@ -32,11 +32,13 @@ exports.weeklySales = function(week) {
       } else {
         sold += salesList[i][1];
       }
+      var totalAmount= singlePrice*sold;
 
       weeklySales.push({
         "stockItem": stockItem,
         "sold": sold,
-        "singlePrice": Number(singlePrice)
+        "singlePrice": Number(singlePrice),
+        totalAmount: totalAmount
 
       });
     }
