@@ -1,7 +1,7 @@
 exports.weeklySales = function(week) {
   var fs = require('fs'); //file system
 
-  var sales = fs.readFileSync("./CSV/week" + week + ".csv", "utf8");
+  var sales = fs.readFileSync("../CSV/week" + week + ".csv", "utf8");
   sales = sales.replace("Day,Date,stock item,No sold,Sales Price\n", "");
 
   var ItemsArray = sales.replace(/R/g, "").split('\n');
