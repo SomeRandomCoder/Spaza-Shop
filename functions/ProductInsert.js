@@ -1,6 +1,7 @@
-var weeklySale = require('./weeklySales');
-var mysql = require('mysql');
+var products=require('./products');
+var mysql=require('mysql');
 
+var sql= "INSERT INTO products (product) VALUE ?";
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -9,20 +10,20 @@ var connection = mysql.createConnection({
   database: 'nelisaDB'
 });
 
-var weeklySales=weeklySale.weeklySales(2);
-var sql = "INSERT INTO products (StockItem) VALUE ?";
-var product=[];
-var products=[];
-var category=[];
+var products = products.products();
+var Products=[];
+var Product=[];
+var id =[];
+
 
 connection.connect();
 
-  for(var x=0; x< weeklySales.length;x++){
-    product.push(weeklySales[x].stockItem);
-    products.push([[product[x]]]);
-  }
 
-connection.query(sql, [products], function(err){
+for(var x=0; x< products.length;x++){
+Products.push(products[x]);
+Product.push([Products[x]]);
+}
+connection.query(sql, [Product], function(err){
 if(err) throw err;
 connection.end();
 });

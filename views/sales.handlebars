@@ -1,0 +1,18 @@
+<ul class="row-list">
+
+  <li class="col-md-2 head">Date</li>
+  <li class="col-md-4 head">Product</li>
+  <li class="col-md-2 head">Amount Sold</li>
+  <li class="col-md-2 head">Unit Price</li>
+  <a href="sales/addSales"><li class="btn col-md-2 buttons">Add Sale</li></a>
+        {{#sales}}
+
+
+        <li class="col-md-2 db-List"> {{date}}</li>
+        <li class="col-md-4 db-List"> {{product}}</li>
+        <li class="col-md-2 db-List"> {{sold}}</li>
+        <li class="col-md-2 db-List"> {{price}}</li>
+        <a href="sales/editSale/{{id}}"><li class="btn col-md-1 buttons">edit</li></a>
+        <a href="sales/delete/{{id}}"><li class="btn col-md-1 buttons">delete</li></a>
+        {{/sales}}
+    </ul>

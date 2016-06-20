@@ -1,0 +1,12 @@
+<ul class="row-list">
+  <li class="col-md-6 head"><b>Product</b></li>
+  <a href="categories/addCategory"><li class="btn col-md-6 buttons"><b>Add Product</b></li></a>
+
+
+        {{#products}}
+
+          <li class="col-md-6 db-List"> {{product}}</li>
+          <a href="/categories/editProduct/{{id}}" class="btn col-md-4 buttons">Edit</a>
+          <a href="/categories/delete/{{id}}" class="btn col-md-2 buttons">Delete</a>
+        {{/products}}
+    </ul>

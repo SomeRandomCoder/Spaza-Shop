@@ -13,14 +13,18 @@ processingArray.forEach(function(string){
   var temp = string.split(",");
   finalArray.push(temp);
 });
-console.log(finalArray);
+finalArray.pop();
+// console.log(finalArray);
 var categories = [];
 finalArray.forEach(function(arr){
   if(categories.indexOf(arr[1])=== -1){
     categories.push(arr[1]);
+
   }
 });
 categories.pop();
+categories.shift();
+
 // console.log(categories);
 return categories;
 };

@@ -7,6 +7,7 @@ var leastPopularCatergory = require('../functions/leastPopularCategory');
 var mostProfitableProduct = require('../functions/mostProfitableProduct');
 var mostProfitableCategory = require("../functions/mostProfitableCategory");
 var purchases = require("../functions/purchases");
+var sales = require('../functions/Sales');
 
  describe("weeklySales", function(){
   it("should return a list of weekly products sold, quantity of each product sold and single price per item .", function(){
@@ -911,5 +912,12 @@ describe("purchases",function(){
     cost: '11,00',
     total: '33,00' } ]
 );
+  });
+});
+
+describe("sales",function(){
+  it("should return the sales for all the weeks", function(){
+    var result = sales.Sales();
+    assert.deepEqual(result, ['Coke 500ml'], ["Coke 500ml"], ["Milk 1l"], ['Gold Dish Vegetable Curry Can']);
   });
 });

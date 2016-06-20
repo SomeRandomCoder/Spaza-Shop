@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> {{title}} </title>
-     <link href="/CSS/bootstrap.css" type="text/css" rel="stylesheet">
-    <link href="../CSS/styles.css" type="text/css" rel="stylesheet">
+    <title> Week 1 Statistics </title>
+    <link href="./public/CSS/bootstrap.css" type="text/css" rel="stylesheet">
+   <link href="../public/CSS/styles.css" type="text/css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -21,9 +21,11 @@
           <a class="navbar-brand" href="#">Nelisa Spaza Shop</a>
         </div>
         <ul class="nav navbar-nav">
-          <li class="active"><a href="./homepage.handlebars">Home</a></li>
-          <li><a href="./aboutus.handlebars">About Us</a></li>
-          <li><a href="./index.handlebars">Statistics</a></li>
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/aboutus">About Us</a></li>
+          <li><a href="/index">Statistics</a></li>
+          <li><a href="/sales">Sales</a><li>
+
 
         </ul>
       </div>
@@ -81,16 +83,18 @@
 
 
 
-<!-- <div>
-  <h1>{{title}}</h1>
+ <div>
+  <h1>Week 1 Statistics</h1>
   <div class="body">
   <body>
-    <p>The most popular product is : {{mostPopularProduct}} </p>
-    <p>The least popular product is : {{leastPopularProduct}} </p>
-    <p>The most popular category is : {{mostPopularCategory}} </p>
-    <p>The least popular Category is :  {{leastPopularCategory}}</p>
-    <p>The most Profitable Product is: {{mostProfitableProduct}}</p>
-    <p>The most Profitable category is : {{mostProfitableCategory}} </p>
+   <ol>
+      <li>The most popular product is : {{mostPopularProduct}} </li>
+      <li>The least popular product is : {{leastPopularProduct}} </li>
+      <li>The most popular category is : {{mostPopularCategory}} </li>
+      <li>The least popular Category is :  {{leastPopularCategory}}</li>
+    <li>The most Profitable Product is: {{mostProfitableProduct}}</li>
+      <li>The most Profitable category is : {{mostProfitableCategory}} </li>
+  </ol>
 
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -98,7 +102,7 @@
 
 
 </body>
-</div> -->
+</div>
 
 
 <!-- mostPopularProduct: mpp1,

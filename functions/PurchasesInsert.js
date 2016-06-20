@@ -8,9 +8,9 @@ var connection = mysql.createConnection({
   database: 'nelisaDB'
 });
 
-var sql = 'INSERT INTO purchases (StockItem, Quantity, Cost, TotalAmount , Shop, Date) VALUES ?';
+var sql = 'INSERT INTO purchases (product_id, Quantity, Cost, TotalCost , Shop, Date) VALUES ?';
 
-var stockItem = [];
+var product_id = [];
 var quantity = [];
 var cost = [];
 var date = [];
@@ -19,17 +19,30 @@ var shop = [];
 
 var Purchasesvalues =[];
 connection.connect();
+
+connection.query('SELECT * FROM products', function(err, products) {
+  if (err) return next(err);
+
+
+var product_id={};
+
+products.forEach(function(product){
+  product_id[product.product] = product.id;
+});
+
 var purchases = purchase.purchases();
 
 for (var y=0; y< purchases.length;y++){
-  stockItem.push(purchases[y].item);
+  product_id.push(purchases[y].product_id);
+
   quantity.push(purchases[y].quantity);
   cost.push( purchases[y].cost);
   total.push( purchases[y].total);
   shop.push(purchases[y].shop);
   date.push(purchases[y].date);
 
-Purchasesvalues.push([[stockItem[y]], [quantity[y]], [cost[y]], [total[y]], [shop[y]], [date[y]]]);
+
+Purchasesvalues.push([[product_id[y]], [quantity[y]], [cost[y]], [total[y]], [shop[y]], [date[y]]]);
 }
 
 connection.query(sql, [Purchasesvalues], function(err){
@@ -37,3 +50,4 @@ connection.query(sql, [Purchasesvalues], function(err){
   connection.end();
 });
 console.log("success");
+});

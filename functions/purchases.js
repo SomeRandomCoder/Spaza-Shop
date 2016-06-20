@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-exports.purchases = function(){
+// exports.purchases = function(){
   var purchase = fs.readFileSync('../CSV/purchases.csv', "utf8");
   purchase = purchase.replace("Shop;Date;Item;Quantity;Cost;Total Cost", "").replace(/R/g, "");
   var processingArray = purchase.split('\n').join('.').split(";").join(".").split(".");
@@ -29,5 +29,5 @@ exports.purchases = function(){
   }
   purchases.shift();
   // console.log(purchases);
-  return purchases;
-};
+  // return purchases;
+// };

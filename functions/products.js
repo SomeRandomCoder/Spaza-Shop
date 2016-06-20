@@ -1,8 +1,26 @@
-var weeklySale = require('./weeklySales');
+var fs=require('fs');
 
-var weeklySales = weeklySale.weeklySales(week);
-var products =[];
+exports.products=function(){
 
-for(var x=0; x<weeklySales.length; x++){
-  products.push(weeklySales[x].stockItem);
-}
+var file = fs.readFileSync("../CSV/catagories.csv", "utf8");
+var files = file.replace(/Product,Category\n/g, "").replace(/\n/g, ",").split(",");
+
+category = file.replace("Product,Category\n", "");
+var processingArray = category.split('\n');
+var finalArray=[];
+
+processingArray.forEach(function(string){
+  var temp = string.split(",");
+  finalArray.push(temp);
+});
+// console.log(finalArray);
+var categories = [];
+finalArray.forEach(function(arr){
+  if(categories.indexOf(arr[0])=== -1){
+    categories.push(arr[0]);
+  }
+});
+categories.pop();
+// console.log(categories);
+return categories;
+};

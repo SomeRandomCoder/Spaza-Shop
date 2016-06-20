@@ -98,3 +98,23 @@
   padding-top: 2%;
   background-color: transparent;
 }
+.row-list{
+  width:80%;
+  /*border: 2px double black;*/
+  display: inline-block;
+  list-style-type: none;
+  padding-left:25%;
+}
+.db-List{
+    height: 34px;
+    border: 1px solid black;
+    text-decoration: none;
+}
+.head{
+    border: 1px solid black;
+    height: 34px;
+
+}
+/*.buttons{
+  border: 2px double black;
+}*/

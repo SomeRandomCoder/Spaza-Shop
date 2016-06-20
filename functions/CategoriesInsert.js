@@ -15,11 +15,12 @@ var Category=[];
 
 connection.connect();
 for(var x=0; x< category.length;x++){
-Categories.push(category[x]);
-Category.push([Categories[x]]);
+Categories.push([category[x]]);
+// console.log(Categories);
+// Category.push([Categories[x]]);
 }
-connection.query(sql, [Category], function(err){
+connection.query(sql, [Categories], function(err){
   if (err) throw err;
   connection.end();
 });
-console.log("success");
+console.log("Entry into Database successful");
