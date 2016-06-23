@@ -17,6 +17,10 @@ var mostProfitableProduct = require('./functions/mostProfitableProduct');
 var mostProfitableCategory = require("./functions/mostProfitableCategory");
 var categories = require("./functions/mostPopularCategory");
 var bought = require("./functions/mostProfitableCategory");
+var categoriesCRUD=require('./functions/categoriesCRUD');
+var productsCRUD=require("./functions/productsCRUD");
+var salesCRUD=require("./functions/salesCRUD");
+var purchaseCRUD=require("./functions/purchasesCRUD");
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -126,7 +130,7 @@ app.get("/week4", function(req, res) {
 
 app.get("/sales", function(req, res, next){
   req.getConnection(function(err, connection) {
-      // connection = mysql.createConnection(dbOptions);
+      connection = mysql.createConnection(dbOptions);
       if (err) return next(err);
       connection.query("SELECT  sales.date,sales.id, sales.product_id, sales.sold, sales.price ,products.product FROM sales, products WHERE sales.product_id = products.id AND sales.sold > 0 ORDER BY `sales`.`product_id` ASC ", function(err, data) {
             if (err) return next(err);
@@ -142,9 +146,10 @@ app.get("/sales", function(req, res, next){
 
 app.get('/categories', function(req, res, next) {
     req.getConnection(function(err, connection) {
+      connection = mysql.createConnection(dbOptions);
         // connection = mysql.createConnection(dbOptions);
         if (err) return next(err);
-        connection.query("SELECT categories.id, categories.category FROM categories", function(err, data) {
+        connection.query("SELECT categories.id, categories.category FROM categories", [],function(err, data) {
             if (err) return next(err);
             res.render("categories", {
                 categories: data
@@ -156,12 +161,14 @@ app.get('/categories', function(req, res, next) {
 
 app.get('/products', function(req, res, next) {
     req.getConnection(function(err, connection) {
-        // connection = mysql.createConnection(dbOptions);
+        connection = mysql.createConnection(dbOptions);
         if (err) return next(err);
-        connection.query("SELECT products.id, products.product FROM products", function(err, data) {
+        connection.query("SELECT products.id, products.product ,categories.category FROM products, categories WHERE products.category_id = categories.id  ORDER BY `products`.`id` ASC ", [], function(err, data) {
+
             if (err) return next(err);
             res.render("products", {
                 products: data
+
             });
             // connection.end();
         });
@@ -170,7 +177,7 @@ app.get('/products', function(req, res, next) {
 
 app.get("/purchases", function(req, res, next){
   req.getConnection(function(err, connection) {
-      // connection = mysql.createConnection(dbOptions);
+      connection = mysql.createConnection(dbOptions);
       if (err) return next(err);
       connection.query("SELECT  purchases.date,purchases.id, purchases.stockItem, purchases.quantity, purchases.cost ,purchases.shop FROM purchases  ORDER BY `purchases`.`stockItem` ASC ", function(err, data) {
             if (err) return next(err);
@@ -184,11 +191,43 @@ app.get("/purchases", function(req, res, next){
 
 });
 
+// app.get("/addCategory",function(req,res){
+//   res.render("addCategory");
+// });
+// app.get("/editCategory",function(req,res){
+//     res.render("editCategory");
+// });
+// app.get("/editProduct",function(req,res){
+//     res.render("editProduct");
+// });
+// app.get("/addProduct",function(req,res){
+//   res.render("addProduct");
+// });
 
+app.get('/sales/addSales', salesCRUD.showAdd);
+app.post('/sales/addSales', salesCRUD.add);
+app.get('/sales/delete/:id', salesCRUD.delete);
+app.get('/sales/editSales/:id', salesCRUD.get);
+app.post('/sales/update/:id', salesCRUD.update);
 
+app.get('/products/addProduct', productsCRUD.showAdd);
+app.post('/products/addProduct', productsCRUD.add);
+app.get('/products/delete/:id', productsCRUD.delete);
+app.get('/products/editProduct/:id', productsCRUD.get);
+app.post('/products/update/:id', productsCRUD.update);
 
+app.get('/purchases/addPurchases', purchaseCRUD.showAdd);
+app.post('/purchases/addPurchases', purchaseCRUD.add);
+app.get('/purchases/delete/:id', purchaseCRUD.delete);
+app.get('/purchases/editPurchases/:id', purchaseCRUD.get);
+app.post('/purchases/update/:id', purchaseCRUD.update);
 
-
+app.get('/categories/addCategory', categoriesCRUD.showAdd);
+app.post('/categories/addCategory', categoriesCRUD.add);
+app.get('/categories/delete/:id', categoriesCRUD.delete);
+app.get('/categories/editCategory/:id', categoriesCRUD.get);
+app.post('/categories/update/:id', categoriesCRUD.update);
+// app.post('/functions/categoriesCRUD', categoriesCRUD.add);
 
 var server = app.listen(3000, function() {
   var host = server.address().address;

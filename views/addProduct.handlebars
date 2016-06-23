@@ -1,0 +1,20 @@
+<div class= "row-list">
+	<h1>Add Product</h1>
+	<form action="/products/addProduct" method="POST">
+	<div class="">
+	<label>Category</label>
+	<select class="browser-default" name="category_id">
+		{{#categories}}
+			<option value="{{id}}">{{category}}</options>
+				{{/categories}}
+			</select>
+		</div>
+
+
+	<div class="">
+    <label>Product</label>
+    <input type="text" name="product" value="{{data.product}}">
+	</div>
+	<input type="submit" value="Add Product">
+</form>
+</div>

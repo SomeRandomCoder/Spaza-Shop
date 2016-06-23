@@ -1,0 +1,23 @@
+<h1>Add Sale</h1>
+
+<form action="/sales/addSales" method="POST">
+  <div>
+    <label for="date">date</label>
+    <input class="datepicker" type="date" name="date" value="{{data.date}}">
+  </div>
+  <div>
+    <label for="sold">quantity</label>
+    <input type="number" name="sold" value="{{data.sold}}">
+  </div>
+  <label>Product</label>
+  <select class="browser-default" name="product_id">
+    {{#sales}}
+    <option value="{{id}}"> {{product}}</option>
+    {{/sales}}
+  </select>
+  <div>
+    <label for="price">price</label>
+    <input type="text" name="price" value="{{data.price}}">
+  </div>
+	<input type="submit" value="Add Sale">
+</form>
