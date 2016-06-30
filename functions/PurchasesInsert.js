@@ -32,7 +32,7 @@ products.forEach(function(product){
 
 var purchases = purchase.purchases();
 
-for (var y=0; y< purchases.length;y++){
+for (var y=0; y< purchase.length;y++){
   product_id.push(purchases[y].product_id);
 
   quantity.push(purchases[y].quantity);

@@ -16,6 +16,7 @@ var connection = mysql.createConnection({
   var purchases = [];
 
   // var products = "SELECT * FROM products";
+
 connection.connect();
   connection.query('SELECT * FROM products', function(err, products) {
 
@@ -30,9 +31,11 @@ connection.connect();
 // console.log(product_id);
 
 
+
   for(x=0;x<processingArray.length - 1;x++){ //looping through the purchase list and making a purchase array with the item and cost
     if(x % 6 === 0){
-      var date = processingArray[x - 4];
+      var date = new Date(processingArray[x - 4] + "-2016");
+      // var date = processingArray[x - 4];
       var item = processingArray[x - 3];
       var quantity = processingArray[x-2];
       var cost = processingArray[x - 1];
@@ -40,16 +43,21 @@ connection.connect();
       var shop = processingArray[x -5];
       var productID = product_id[item];
       // console.log(processingArray[x]);
-
+    
     purchases.push([productID,item,quantity,cost,shop,date]);
-    // console.log(purchases);
+    console.log(purchases);
   }
   }
+
+
   purchases.shift();
-var sql = 'INSERT INTO purchases (product_id,StockItem, Quantity, Cost , Shop, Date) VALUES ?';
-  connection.query(sql, [purchases], function(err){
-    if (err) throw err;
-    connection.end();
-  });
-  console.log("Entry into the Database successful");
+
+
+
+// var sql = 'INSERT INTO purchases (product_id,StockItem, Quantity, Cost , Shop, Date) VALUES ?';
+//   connection.query(sql, [purchases], function(err){
+//     if (err) throw err;
+//     connection.end();
+//   });
+//   console.log("Entry into the Database successful");
 });

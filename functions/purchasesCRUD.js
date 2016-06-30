@@ -18,6 +18,7 @@ exports.add = function (req, res, next) {
       quantity: Number(req.body.quantity),
       cost: Number(req.body.cost),
 			product_id : Number(req.body.product_id),
+			shop: req.body.shop
   		};
 		connection.query('insert into purchases set ?', data, function(err, results) {
   			if (err) return next(err);

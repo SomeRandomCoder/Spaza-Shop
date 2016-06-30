@@ -19,7 +19,8 @@ input = input.replace("Day,Date,stock item,No sold,Sales Price\n", "");
   for (i = 1; i < salesList.length ; i++) { //maps stock item and amount sold.
 
     // if (i % 6 === 0) {
-      var date = salesList[i][0];
+    var date = new Date(salesList[i][0] + "-2016");
+      // var date = salesList[i][0];
       var stockItem = salesList[i][1]; //if i % 7 then put that item with index 0 in stockItem (salesList index 1 = Item)
       var sold = salesList[i][2]; // amount sold
       var income = salesList[i][3];

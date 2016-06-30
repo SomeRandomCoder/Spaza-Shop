@@ -179,7 +179,7 @@ app.get("/purchases", function(req, res, next){
   req.getConnection(function(err, connection) {
       connection = mysql.createConnection(dbOptions);
       if (err) return next(err);
-      connection.query("SELECT  purchases.date,purchases.id, purchases.stockItem, purchases.quantity, purchases.cost ,purchases.shop FROM purchases  ORDER BY `purchases`.`stockItem` ASC ", function(err, data) {
+      connection.query("SELECT purchases.Date,purchases.id, products.product,  purchases.quantity, purchases.cost ,purchases.shop FROM purchases, products WHERE purchases.product_id = products.id ORDER BY `purchases`.`stockItem` ASC ", function(err, data) {
             if (err) return next(err);
           if (err) return next(err);
           res.render("purchases", {

@@ -25,6 +25,6 @@ finalArray.forEach(function(arr){
 categories.pop();
 categories.shift();
 
-// console.log(categories);
+console.log(categories);
 return categories;
 };
