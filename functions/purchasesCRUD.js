@@ -1,7 +1,9 @@
-exports.showAdd = function(req, res){
+exports.showAdd = function(req, res, next){
 	req.getConnection(function(err, connection){
 		if (err) return next(err);
 		connection.query('SELECT * from purchases, products', [], function(err, purchases) {
+			// connection.query("SELECT product_id,purchases.StockItem, DATE_FORMAT(purchases.Date,'%d %b %y') as Date,purchases.Shop, purchases.Cost, purchases.Quantity, products.product FROM purchases, products", [], function(err, purchases) {
+
         	if (err) return next(err);
     		res.render( 'addPurchases', {
 					purchases : purchases,

@@ -132,7 +132,7 @@ app.get("/sales", function(req, res, next){
   req.getConnection(function(err, connection) {
       connection = mysql.createConnection(dbOptions);
       if (err) return next(err);
-      connection.query("SELECT  sales.date,sales.id, sales.product_id, sales.sold, sales.price ,products.product FROM sales, products WHERE sales.product_id = products.id AND sales.sold > 0 ORDER BY `sales`.`product_id` ASC ", function(err, data) {
+      connection.query("SELECT   DATE_FORMAT(sales.date,'%d %b %y') as date,sales.id, sales.product_id, sales.sold, sales.price ,products.product FROM sales, products WHERE sales.product_id = products.id AND sales.sold > 0 ORDER BY `sales`.`date` ASC ", function(err, data) {
             if (err) return next(err);
           if (err) return next(err);
           res.render("sales", {
@@ -179,9 +179,9 @@ app.get("/purchases", function(req, res, next){
   req.getConnection(function(err, connection) {
       connection = mysql.createConnection(dbOptions);
       if (err) return next(err);
-      connection.query("SELECT purchases.Date,purchases.id, products.product,  purchases.quantity, purchases.cost ,purchases.shop FROM purchases, products WHERE purchases.product_id = products.id ORDER BY `purchases`.`stockItem` ASC ", function(err, data) {
+        connection.query("SELECT DATE_FORMAT(purchases.Date,'%d %b %y') as Date,purchases.id, products.product, purchases.stockItem, purchases.quantity, purchases.cost ,purchases.shop FROM purchases, products WHERE purchases.product_id = products.id ORDER BY `purchases`.`Date` ASC ", function(err, data) {
             if (err) return next(err);
-          if (err) return next(err);
+          // if (err) return next(err);
           res.render("purchases", {
               purchases: data
           });

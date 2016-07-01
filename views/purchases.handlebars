@@ -1,9 +1,9 @@
-<ul class="row-list">
+<ul class="row-list" >
 
   <li class="col-md-2 head">Date</li>
-  <li class="col-md-2 head">Product</li>
-  <li class="col-md-2 head">Quantity</li>
-  <li class="col-md-2 head">Unit Price</li>
+  <li class="col-md-4 head">Product</li>
+  <li class="col-md-1 head">Quantity</li>
+  <li class="col-md-1 head">Unit Price</li>
   <li class="col-md-2 head">Shop</li>
 
   <a href="purchases/addPurchases"><li class="btn col-md-2 buttons">Add Purchase</li></a>
@@ -11,17 +11,12 @@
 
 
         <li class="col-md-2 db-List"> {{Date}}</li>
-        <li class="col-md-2 db-List"> {{product}}</li>
-        <li class="col-md-2 db-List"> {{quantity}}</li>
-        <li class="col-md-2 db-List"> {{cost}}</li>
+        <li class="col-md-4 db-List"> {{product}}</li>
+        <li class="col-md-1 db-List"> {{quantity}}</li>
+        <li class="col-md-1 db-List"> {{cost}}</li>
         <li class="col-md-2 db-List"> {{shop}}</li>
 
         <a href="purchases/editPurchases/{{id}}"><li class="btn col-md-1 buttons">edit</li></a>
         <a href="purchases/delete/{{id}}"><li class="btn col-md-1 buttons">delete</li></a>
         {{/purchases}}
     </ul>
-
-    <!-- <script>
-    var d = new Date();
-    document.getElementById("demo").innerHTML = d.toDateString();
-    </script> -->
