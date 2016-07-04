@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS `products` (
 )
 
 
+
+
 CREATE TABLE IF NOT EXISTS `purchases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `shop` varchar(30) NOT NULL,
@@ -27,6 +29,8 @@ CREATE TABLE IF NOT EXISTS `purchases` (
   KEY `product_id` (`product_id`)
 )
 
+
+
 CREATE TABLE IF NOT EXISTS `sales` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
@@ -36,6 +40,8 @@ CREATE TABLE IF NOT EXISTS `sales` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
 )
+
+
 
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
