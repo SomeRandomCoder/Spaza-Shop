@@ -3,7 +3,7 @@ var mysql = require('mysql');
 var sql= "INSERT INTO categories(Category) VALUES ?";
 
 var connection = mysql.createConnection({
-  host: 'localhost',
+  host: '127.0.0.1',//localhost
   user: 'root',
   password: "mxmaolqk",
   database: 'nelisaDB'
