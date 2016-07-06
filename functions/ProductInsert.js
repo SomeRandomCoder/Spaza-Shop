@@ -4,7 +4,7 @@ var mysql=require('mysql');
 var sql= "INSERT INTO products (product) VALUE ?";
 
 var connection = mysql.createConnection({
-  host: '127.0.0.1',//localhost
+  host: 'localhost',//local
   user: 'root',
   password: "mxmaolqk",
   database: 'nelisaDB'

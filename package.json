@@ -14,8 +14,10 @@
     "handlebars": "~4.0.5",
     "mysql": "~2.10.2",
     "nodemon": "~1.9.2",
-    "express-session": "^1.13.0"
-
+    "express-session": "~1.14.0",
+    "bcrypt": "~0.8.7",
+    "flash": "~1.1.0",
+    "express-flash": "0.0.2"
   },
   "devDependencies": {},
   "scripts": {

@@ -1,0 +1,19 @@
+<ul class="row-list">
+  <li class="col-md-4 head"><b>User</b></li>
+  <li class="col-md-2 head"><b>Admin</b></li>
+  <li class="col-md-2 head"><b>Locked</b></li>
+  <li class="col-md-4 db-List"></li>
+
+
+
+
+        {{#users}}
+
+          <li class="col-md-4 db-List"> {{username}}</li>
+          <li class="col-md-2 db-List">{{admin}}</li>
+          <li class="col-md-2 db-List">{{locked}}</li>
+
+          <a href="/users/editUsers/{{id}}" class="btn col-md-2 buttons">Edit</a>
+          <a href="/users/delete/{{id}}" class="btn col-md-2 buttons">Delete</a>
+        {{/users}}
+    </ul>

@@ -5,7 +5,9 @@ var app = express();
 var mysql = require('mysql');
 var myConnection = require("express-myconnection");
 var bodyParser = require('body-parser');
-
+var session = require("express-session");
+var bcrypt=require("bcrypt");
+var flash=require('express-flash');
 
 
 var weeklySales = require('./functions/weeklySales');
@@ -21,6 +23,9 @@ var categoriesCRUD=require('./functions/categoriesCRUD');
 var productsCRUD=require("./functions/productsCRUD");
 var salesCRUD=require("./functions/salesCRUD");
 var purchaseCRUD=require("./functions/purchasesCRUD");
+var signup=require("./functions/signup");
+var usersCRUD=require("./functions/users");
+var login=require("./functions/login");
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -44,30 +49,33 @@ var connection = mysql.createConnection({
   user: 'root',
   password: "mxmaolqk",
   database: 'nelisaDB'
+
 });
+
+var server = app.listen(3000, function() {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log("app listening at http://%s:%s", host, port);
+});
+
 
 app.engine("handlebars", handlebars({
   defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
 
-
-//===========================================================================
-//MUST REFACTOR CODE BELOW!!!
-//===========================================================================
-
-
-    var week1 = {
-      mostPopularProduct: mostPopularProduct.mostPopularProduct(1),
-      leastPopularProduct: leastPopularProduct.leastPopularProducts(1),
-      mostPopularCategory: mostPopularCategory.popularCatergory(1),
-      leastPopularCategory: leastPopularCategory.leastPopularCatergory(1),
-      mostProfitableProduct: mostProfitableProduct.mostProfitableProduct(1),
-      mostProfitableCategory: mostProfitableCategory.mostProfitableCategory(1),
-      title: "Week 1"
-    };
-
-
+app.use(session({
+  secret: 'secret'
+}));
+  var week1 = {
+    mostPopularProduct: mostPopularProduct.mostPopularProduct(1),
+    leastPopularProduct: leastPopularProduct.leastPopularProducts(1),
+    mostPopularCategory: mostPopularCategory.popularCatergory(1),
+    leastPopularCategory: leastPopularCategory.leastPopularCatergory(1),
+    mostProfitableProduct: mostProfitableProduct.mostProfitableProduct(1),
+    mostProfitableCategory: mostProfitableCategory.mostProfitableCategory(1),
+    title: "Week 1"
+  };
 
 var week2 = {
 
@@ -99,7 +107,31 @@ var week4 = {
   mostProfitableCategory: mostProfitableCategory.mostProfitableCategory(4),
   title: "Week 4"
 };
-//===========================================================================
+
+app.get("/signup", function(req, res, next){
+  req.getConnection(function(err, connection){
+    connection = mysql.createConnection(dbOptions);
+    if(err) return next(err);
+    res.render("signup");
+  });
+});
+app.post('/signup', signup);
+
+app.get("/login", function(req, res, next){
+  req.getConnection(function(err, connection){
+    connection = mysql.createConnection(dbOptions);
+    if(err) return next(err);
+    res.render("login");
+  });
+});
+app.post('/login', login);
+
+app.get('/logout', function(req, res) {
+    delete req.session.user;
+    delete req.session.admintab;
+    res.redirect('/login');
+});
+
 
 app.get("/", function(req, res) {
   res.render("homePage");
@@ -192,18 +224,21 @@ app.get("/purchases", function(req, res, next){
 
 });
 
-// app.get("/addCategory",function(req,res){
-//   res.render("addCategory");
-// });
-// app.get("/editCategory",function(req,res){
-//     res.render("editCategory");
-// });
-// app.get("/editProduct",function(req,res){
-//     res.render("editProduct");
-// });
-// app.get("/addProduct",function(req,res){
-//   res.render("addProduct");
-// });
+app.get("/users", function(req, res, next){
+  req.getConnection(function(err, connection) {
+      connection = mysql.createConnection(dbOptions);
+      if (err) return next(err);
+        connection.query("SELECT users.id, users.username, users.locked, users.admin FROM users ORDER BY users.id", function(err, data) {
+            if (err) return next(err);
+          // if (err) return next(err);
+          res.render("users", {
+              users: data
+          });
+          // connection.end();
+      });
+  });
+
+});
 
 app.get('/sales/addSales', salesCRUD.showAdd);
 app.post('/sales/addSales', salesCRUD.add);
@@ -230,8 +265,10 @@ app.get('/categories/editCategory/:id', categoriesCRUD.get);
 app.post('/categories/update/:id', categoriesCRUD.update);
 // app.post('/functions/categoriesCRUD', categoriesCRUD.add);
 
-var server = app.listen(3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log("app listening at http://%s:%s", host, port);
-});
+// app.get('/users', usersCRUD.show);
+app.get('/users/addUser', usersCRUD.showAdd);
+app.post('/users/addUser', usersCRUD.add);
+app.get('/users/delete/:id', usersCRUD.delete);
+app.get('/users/editUsers/:id', usersCRUD.get);
+app.post('/users/update/:id', usersCRUD.update);
+// app.get('/users/search/:searchVal', users.search);

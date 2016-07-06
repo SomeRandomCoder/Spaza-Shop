@@ -1,0 +1,30 @@
+<div class="row-list">
+  <h1>Edit users</h1>
+
+  <form action="/users/update/{{id}}" method="POST">
+    <div>
+  		<input type="text" name="username" value="{{data.username}}" >
+
+
+      <div class="switch" id="adminSwitch">
+          <label>
+            Regular User
+            <input type="checkbox" name="admin" >
+            <span class="lever"></span>
+            Admin
+          </label>
+        </div>
+
+        <div class="switch" id="lockSwitch">
+            <label>
+              Unlock
+              <input  type="checkbox" name="lock">
+              <span class="lever"></span>
+              Lock
+            </label>
+          </div>
+
+    </div>
+  	<input class="btn" type="submit" value="Edit User">
+  </form>
+</div>

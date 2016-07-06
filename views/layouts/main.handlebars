@@ -14,32 +14,86 @@
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 
+<style>
+/* Dropdown Button */
+.dropbtn {
+   background-color: #4CAF50;
+   color: white;
+   padding: 16px;
+   font-size: 16px;
+   border: none;
+   cursor: pointer;
+}
 
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+   position: relative;
+   display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+   display: none;
+   position: absolute;
+   background-color: #f9f9f9;
+   min-width: 160px;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+   color: black;
+   padding: 12px 16px;
+   text-decoration: none;
+   display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+   display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+   background-color: #3e8e41;
+}
+</style>
   </head>
 
   <body class="body">
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Nelisa Spaza Shop</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <!-- <li class="active"><a href="/homePage">Home</a></li>
-          <li><a href="/aboutus">About Us</a></li>
-          <li><a href="/index">Statistics</a></li> -->
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/aboutus">About Us</a></li>
-          <li><a href="/index">Statistics</a></li>
-          <li><a href="/categories">Categories</a></li>
-          <li><a href="/sales">Sales</a><li>
-          <li><a href="/products">Products</a></li>
-          <li><a href="/purchases">Purchases</a></li>
 
 
-        </ul>
-      </div>
-    </nav>
+ <nav class="navbar navbar-default">
+    <div class="collapse navbar-collapse" id="mainNavBar">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/aboutus">About Us</a></li>
+        <li><a href="/index">Statistics</a></li>
+        <li><a href="/categories">Categories</a></li>
+        <li><a href="/sales">Sales</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/purchases">Purchases</a></li>
+        <li><a href="/users">Users</a></li>
 
+      <ul class="nav navbar-nav navbar-right">
+        <div class="dropdown">
+         <button class="dropbtn">Current user: {{user}}</button>
+         <div class="dropdown-content">
+           <a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+           <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+           <a href="/login"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+         </div>
+       </div>
+      </ul>
+
+ 
+
+    </ul>
+</div>
+</div></nav>
 {{{body}}}
 
  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script> -->
