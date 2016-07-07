@@ -120,13 +120,13 @@ app.use(function(req,res,next){
     next();
 });
 //
-// app.use(function(req,res,next){
-//     if(!req.session.admintab){
-//       if(req.path == "/sales" || req.path =="/purchases"|| req.path == "users"){
-//         res.redirect("/");
-//       }
-//     }
-// });
+app.use(function(req,res,next){
+    if(!req.session.admintab){
+      if(req.path == "/sales" || req.path =="/purchases"|| req.path == "users"){
+        res.redirect("/");
+      }
+    }
+});
 
 
 
