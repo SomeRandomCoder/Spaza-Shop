@@ -11,6 +11,7 @@ module.exports = function(req, res, next) {
         var password = req.body.password;
         var admin = "";
         var locked = "";
+
         if(req.body.admin === "on"){
           admin = "1";
         }

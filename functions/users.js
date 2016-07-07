@@ -44,25 +44,25 @@ exports.add = function(req, res, next) {
             locked: 0
         };
 
-// var adminSwitch = req.body.admin;
-//         if(adminSwitch.checked === "true"){
-//           console.log("true");
-//           data.admin = "1";
-//           // data.username = "BLEH";
-//         }
-//         else {
-//           console.log("false");
-//           data.admin = "0";
-//           // data.username = "BLAH";
-//         }
-//         bcrypt.hash(password, 10, function(err, hash) {
-//             data.password = hash;
-//
-//             connection.query('insert into users set ?', data, function(err, data) {
-//                 if (err) return next(err);
-//                 res.redirect('/users');
-//             });
-//         });
+var adminSwitch = req.body.admin;
+        if(adminSwitch.data-on === "true"){
+          console.log("true");
+          data.admin = "1";
+          // data.username = "BLEH";
+        }
+        else {
+          console.log("false");
+          data.admin = "0";
+          // data.username = "BLAH";
+        }
+        bcrypt.hash(password, 10, function(err, hash) {
+            data.password = hash;
+
+            connection.query('insert into users set ?', data, function(err, data) {
+                if (err) return next(err);
+                res.redirect('/users');
+            });
+        });
     });
 };
 
@@ -82,27 +82,33 @@ exports.get = function(req, res, next) {
 
 exports.update = function(req, res, next) {
 
-    var id = req.params.id;
-    // var password = req.body.password;
+    var id = req.params.id; //checks url for ID
+    var password = req.body.password;
     var data = {
         username: req.body.username,
         admin: req.body.admin,
         locked: req.body.lock
     };
-    if(req.body.admin === "on"){
-      data.admin = "1";
+var adminSwitch = req.body.admin;
+var lockSwitch = req.body.lock;
+
+    if(adminSwitch === "on"){
+      data.admin= 0;
     }
-    else {
-      data.admin = "0";
+    else{
+      data.admin=1;
     }
-    if(req.body.lock === "on"){
-      data.locked = "1";
+
+    if(lockSwitch === "on"){
+      data.locked=1;
     }
-    else {
-      data.locked = "0";
+    else{
+      data.locked=0;
     }
-    // bcrypt.hash(password, 10, function(err, hash) {
-    //     data.password = hash;
+
+console.log(adminSwitch);
+    bcrypt.hash(password, 10, function(err, hash) {
+        data.password = hash;
 
         req.getConnection(function(err, connection) {
             connection.query('UPDATE users SET ? WHERE id = ?', [data, id], function(err, rows) {
@@ -110,7 +116,7 @@ exports.update = function(req, res, next) {
                 res.redirect('/users');
             });
         });
-    // });
+    });
 };
 
 exports.delete = function(req, res, next) {

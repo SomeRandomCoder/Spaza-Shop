@@ -108,6 +108,8 @@ var week4 = {
   title: "Week 4"
 };
 
+
+
 app.get("/signup", function(req, res, next){
   req.getConnection(function(err, connection){
     connection = mysql.createConnection(dbOptions);
