@@ -106,9 +106,9 @@ var lockSwitch = req.body.lock;
       data.locked=0;
     }
 
-console.log(adminSwitch);
-    bcrypt.hash(password, 10, function(err, hash) {
-        data.password = hash;
+
+    // bcrypt.hash(password, 10, function(err, hash) {
+    //     data.password = hash;
 
         req.getConnection(function(err, connection) {
             connection.query('UPDATE users SET ? WHERE id = ?', [data, id], function(err, rows) {
@@ -116,7 +116,7 @@ console.log(adminSwitch);
                 res.redirect('/users');
             });
         });
-    });
+    // });
 };
 
 exports.delete = function(req, res, next) {

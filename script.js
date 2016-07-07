@@ -67,6 +67,7 @@ app.set("view engine", "handlebars");
 app.use(session({
   secret: 'secret'
 }));
+
   var week1 = {
     mostPopularProduct: mostPopularProduct.mostPopularProduct(1),
     leastPopularProduct: leastPopularProduct.leastPopularProducts(1),
@@ -107,6 +108,25 @@ var week4 = {
   mostProfitableCategory: mostProfitableCategory.mostProfitableCategory(4),
   title: "Week 4"
 };
+
+app.use(function(req,res,next){
+  if(req.path != "/login"){
+    if(req.path != "/signup"){
+      if(!req.session.username){
+        return res.redirect("/login");
+      }
+    }
+  }
+    next();
+});
+//
+// app.use(function(req,res,next){
+//     if(!req.session.admintab){
+//       if(req.path == "/sales" || req.path =="/purchases"|| req.path == "users"){
+//         res.redirect("/");
+//       }
+//     }
+// });
 
 
 
@@ -176,7 +196,6 @@ app.get("/sales", function(req, res, next){
           // connection.end();
       });
   });
-
 });
 
 app.get('/categories', function(req, res, next) {
