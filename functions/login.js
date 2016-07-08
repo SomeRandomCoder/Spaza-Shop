@@ -19,7 +19,7 @@ module.exports = function(req, res) {
                     if (match) {
                         req.session.username = user.username;
                         if(user.admin === 1){
-                        req.session.admintab = {
+                        req.session.admin = {
                           admin: req.session.username
                         };
                       }

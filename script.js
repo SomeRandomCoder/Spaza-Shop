@@ -34,6 +34,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
+
 var dbOptions = {
   host: "localhost",
   user: 'root',
@@ -65,7 +66,9 @@ app.engine("handlebars", handlebars({
 app.set("view engine", "handlebars");
 
 app.use(session({
-  secret: 'secret'
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: false
 }));
 
   var week1 = {
@@ -109,40 +112,85 @@ var week4 = {
   title: "Week 4"
 };
 
-app.use(function(req,res,next){
-  if(req.path != "/login"){
-    if(req.path != "/signup"){
-      if(!req.session.username){
-        return res.redirect("/login");
-      }
-    }
-  }
-    next();
-});
+// app.use(function(req,res,next){
+//   if(req.path != "/login"){
+//     if(req.path != "/signup"){
+//       if(!req.session.username){
+//         return res.redirect("/login");
+//       }
+//     }
+//   }
+//     next();
+// });
 //
+// app.use(function(req,res,next){
+//   if(!req.session.admin){
+//     if(req.path == "/sales"){
+//       res.redirect("/");
+//     }
+//   }
+// next();
+// });
+
 app.use(function(req,res,next){
-    if(!req.session.admintab){
-      if(req.path == "/sales" || req.path =="/purchases"|| req.path == "users"){
-        res.redirect("/");
-      }
-    }
+  var isAdmin = req.session.admin && req.session.username,
+      isUser = !req.session.admin && req.session.username,
+      anyUser = req.session.username,
+      pathIsLogin = req.path === "/login",
+      pathIsSignUp = req.path === "/signup";
+console.log("IS ADMIN", isAdmin);
+console.log("IS USER", isUser);
+console.log("IS NOT ANY USER", !anyUser);
+console.log("PATH IS LOGIN", pathIsLogin);
+console.log("PATH IS SIGN UP", pathIsSignUp);
+console.log("USING AUTHENTICATION METHOD");
+console.log("THIS IS REQ.PATH", req.path);
+console.log("THIS IS REQ.PATH.SPLIT", req.path.split("/")[1]);
+
+  var generalPath = req.path.split("/")[1] === "login"
+              || req.path.split("/")[1] === "signup"
+              || req.path === "/";
+
+  var adminPath = req.path.split("/")[1] === "products"
+               || req.path.split("/")[1] === "categories"
+               || req.path.split("/")[1] === "sales"
+               || req.path.split("/")[1] === "purchases"
+               || req.path.split("/")[1] === "users";
+
+  if (!anyUser) {
+    console.log("USER NOT SIGNED UP OR LOGGED IN REDIRECTING TO SIGNUP/LOGIN");
+      res.redirect("/signup");
+  } else if (isUser && generalPath) {
+    console.log("IS USER AND GENERAL PATH MOVING ON TO NEXT MIDDLEWARE");
+    next();
+  } else if (isUser && adminPath) {
+    console.log("IS USER BUT ATTEMPTING TO GO TO ADMIN PATH REDIRECTING PATH TO '/'");
+    res.redirect("/");
+  } else if (isAdmin && (adminPath || generalPath)) {
+    console.log("IS ADMIN AND PATH IS ADMIN OR GENERAL. MOVING ON TO NEXT MIDDLEWARE");
+    next();
+  }
+
 });
-
-
 
 app.get("/signup", function(req, res, next){
+  console.log("DIRECTED TO SIGNUP ROUTE");
   req.getConnection(function(err, connection){
-    connection = mysql.createConnection(dbOptions);
+    // connection = mysql.createConnection(dbOptions);
     if(err) return next(err);
+    console.log("RENDERING SIGNUP PAGE");
     res.render("signup");
   });
 });
+
 app.post('/signup', signup);
 
 app.get("/login", function(req, res, next){
+  console.log("DIRECTED TO LOG IN ROUTE");
   req.getConnection(function(err, connection){
-    connection = mysql.createConnection(dbOptions);
+    // connection = mysql.createConnection(dbOptions);
     if(err) return next(err);
+    console.log("RENDERING LOG IN PAGE ");
     res.render("login");
   });
 });
@@ -150,7 +198,7 @@ app.post('/login', login);
 
 app.get('/logout', function(req, res) {
     delete req.session.user;
-    delete req.session.admintab;
+    delete req.session.admin;
     res.redirect('/login');
 });
 
