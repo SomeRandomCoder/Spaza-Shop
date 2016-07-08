@@ -112,44 +112,31 @@ var week4 = {
   title: "Week 4"
 };
 
-// app.use(function(req,res,next){
-//   if(req.path != "/login"){
-//     if(req.path != "/signup"){
-//       if(!req.session.username){
-//         return res.redirect("/login");
-//       }
-//     }
-//   }
-//     next();
-// });
-//
-// app.use(function(req,res,next){
-//   if(!req.session.admin){
-//     if(req.path == "/sales"){
-//       res.redirect("/");
-//     }
-//   }
-// next();
-// });
 
 app.use(function(req,res,next){
   var isAdmin = req.session.admin && req.session.username,
       isUser = !req.session.admin && req.session.username,
-      anyUser = req.session.username,
+      userInSession = req.session.username,
       pathIsLogin = req.path === "/login",
       pathIsSignUp = req.path === "/signup";
+
+// console.log("LOOPING THROUGH FOR THE %d TIME", ++track);
 console.log("IS ADMIN", isAdmin);
 console.log("IS USER", isUser);
-console.log("IS NOT ANY USER", !anyUser);
+console.log("USER IN SESSION", userInSession);
 console.log("PATH IS LOGIN", pathIsLogin);
 console.log("PATH IS SIGN UP", pathIsSignUp);
-console.log("USING AUTHENTICATION METHOD");
 console.log("THIS IS REQ.PATH", req.path);
 console.log("THIS IS REQ.PATH.SPLIT", req.path.split("/")[1]);
 
   var generalPath = req.path.split("/")[1] === "login"
+              || req.path.split("/")[1] === "logout"
               || req.path.split("/")[1] === "signup"
+              || req.path.split("/")[1] === "products"
+              || req.path.split("/")[1] === "categories"
+              || req.path.split("/")[1] === "index"
               || req.path === "/";
+
 
   var adminPath = req.path.split("/")[1] === "products"
                || req.path.split("/")[1] === "categories"
@@ -157,10 +144,13 @@ console.log("THIS IS REQ.PATH.SPLIT", req.path.split("/")[1]);
                || req.path.split("/")[1] === "purchases"
                || req.path.split("/")[1] === "users";
 
-  if (!anyUser) {
+  if (!userInSession && req.path==="/") {
     console.log("USER NOT SIGNED UP OR LOGGED IN REDIRECTING TO SIGNUP/LOGIN");
-      res.redirect("/signup");
-  } else if (isUser && generalPath) {
+      res.redirect("/login");
+  } else if (!userInSession && (pathIsLogin || pathIsSignUp)) {
+    next();
+  }
+  else if (isUser && generalPath) {
     console.log("IS USER AND GENERAL PATH MOVING ON TO NEXT MIDDLEWARE");
     next();
   } else if (isUser && adminPath) {
@@ -197,7 +187,7 @@ app.get("/login", function(req, res, next){
 app.post('/login', login);
 
 app.get('/logout', function(req, res) {
-    delete req.session.user;
+    delete req.session.username;
     delete req.session.admin;
     res.redirect('/login');
 });
