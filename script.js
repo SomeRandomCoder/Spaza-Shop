@@ -6,7 +6,7 @@ var mysql = require('mysql');
 var myConnection = require("express-myconnection");
 var bodyParser = require('body-parser');
 var session = require("express-session");
-var bcrypt=require("bcrypt");
+// var bcrypt=require("bcrypt");
 var flash=require('express-flash');
 
 
@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 var dbOptions = {
-  host: "localhost",
+  host: "127.0.0.1",
   user: 'root',
   password: "mxmaolqk",
   port: 3306,
@@ -46,7 +46,7 @@ var dbOptions = {
 app.use(myConnection(mysql, dbOptions, "single"));
 
 var connection = mysql.createConnection({
-  host: 'localhost',
+  host: '127.0.0.1',
   user: 'root',
   password: "mxmaolqk",
   database: 'nelisaDB'

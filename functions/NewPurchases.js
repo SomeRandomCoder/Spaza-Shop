@@ -1,7 +1,7 @@
 var fs = require('fs');
 var mysql=require('mysql');
 var connection = mysql.createConnection({
-  host: 'localhost',//localhost
+  host: '127.0.0.1',//localhost
   user: 'root',
   password: "mxmaolqk",
   database: 'nelisaDB'
