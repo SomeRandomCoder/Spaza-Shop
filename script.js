@@ -6,7 +6,7 @@ var mysql = require('mysql');
 var myConnection = require("express-myconnection");
 var bodyParser = require('body-parser');
 var session = require("express-session");
-// var bcrypt=require("bcrypt");
+var bcrypt=require("bcrypt");
 var flash=require('express-flash');
 
 
@@ -124,10 +124,10 @@ app.use(function(req,res,next){
 console.log("IS ADMIN", isAdmin);
 console.log("IS USER", isUser);
 console.log("USER IN SESSION", userInSession);
-console.log("PATH IS LOGIN", pathIsLogin);
-console.log("PATH IS SIGN UP", pathIsSignUp);
-console.log("THIS IS REQ.PATH", req.path);
-console.log("THIS IS REQ.PATH.SPLIT", req.path.split("/")[1]);
+// console.log("PATH IS LOGIN", pathIsLogin);
+// console.log("PATH IS SIGN UP", pathIsSignUp);
+// console.log("THIS IS REQ.PATH", req.path);
+// console.log("THIS IS REQ.PATH.SPLIT", req.path.split("/")[1]);
 
   var generalPath = req.path.split("/")[1] === "login"
               || req.path.split("/")[1] === "logout"
@@ -135,29 +135,44 @@ console.log("THIS IS REQ.PATH.SPLIT", req.path.split("/")[1]);
               || req.path.split("/")[1] === "products"
               || req.path.split("/")[1] === "categories"
               || req.path.split("/")[1] === "index"
-              || req.path === "/";
+              || req.path === "/"
+              || req.path.split("/")[1] === "week1"
+              || req.path.split("/")[1] === "week2"
+              || req.path.split("/")[1] === "week3"
+              || req.path.split("/")[1] === "week4"
+
+
+
+
 
 
   var adminPath = req.path.split("/")[1] === "products"
                || req.path.split("/")[1] === "categories"
                || req.path.split("/")[1] === "sales"
                || req.path.split("/")[1] === "purchases"
-               || req.path.split("/")[1] === "users";
+               || req.path.split("/")[1] === "users"
+               || req.path.split("/")[1] === "editUsers"
+               || req.path.split("/")[1] === "editSales"
+               || req.path.split("/")[1] === "editPurchases"
+               || req.path.split("/")[1] === "editProducts"
+
+
+
 
   if (!userInSession && req.path==="/") {
-    console.log("USER NOT SIGNED UP OR LOGGED IN REDIRECTING TO SIGNUP/LOGIN");
+    // console.log("USER NOT SIGNED UP OR LOGGED IN REDIRECTING TO SIGNUP/LOGIN");
       res.redirect("/login");
   } else if (!userInSession && (pathIsLogin || pathIsSignUp)) {
     next();
   }
   else if (isUser && generalPath) {
-    console.log("IS USER AND GENERAL PATH MOVING ON TO NEXT MIDDLEWARE");
+    // console.log("IS USER AND GENERAL PATH MOVING ON TO NEXT MIDDLEWARE");
     next();
   } else if (isUser && adminPath) {
-    console.log("IS USER BUT ATTEMPTING TO GO TO ADMIN PATH REDIRECTING PATH TO '/'");
+    // console.log("IS USER BUT ATTEMPTING TO GO TO ADMIN PATH REDIRECTING PATH TO '/'");
     res.redirect("/");
   } else if (isAdmin && (adminPath || generalPath)) {
-    console.log("IS ADMIN AND PATH IS ADMIN OR GENERAL. MOVING ON TO NEXT MIDDLEWARE");
+    // console.log("IS ADMIN AND PATH IS ADMIN OR GENERAL. MOVING ON TO NEXT MIDDLEWARE");
     next();
   }
 
@@ -194,15 +209,15 @@ app.get('/logout', function(req, res) {
 
 
 app.get("/", function(req, res) {
-  res.render("homePage");
+  res.render("homePage", {isAdmin: req.session.admin && req.session.username,isUser: !req.session.admin && req.session.username });
 });
 
 app.get("/aboutus", function(req, res) {
-  res.render("aboutus");
+  res.render("aboutus", {isAdmin: req.session.admin && req.session.username,isUser: !req.session.admin && req.session.username });
 });
 
 app.get("/index", function(req, res) {
-  res.render("index");
+  res.render("index",{isAdmin: req.session.admin && req.session.username,isUser: !req.session.admin && req.session.username });
 });
 
 app.get("/week1", function(req, res) {
@@ -229,7 +244,9 @@ app.get("/sales", function(req, res, next){
             if (err) return next(err);
           if (err) return next(err);
           res.render("sales", {
-              sales: data
+              sales: data,
+              isAdmin: req.session.admin && req.session.username,
+                isUser: !req.session.admin && req.session.username
           });
           // connection.end();
       });
@@ -244,7 +261,9 @@ app.get('/categories', function(req, res, next) {
         connection.query("SELECT categories.id, categories.category FROM categories", [],function(err, data) {
             if (err) return next(err);
             res.render("categories", {
-                categories: data
+                categories: data,
+                isAdmin: req.session.admin && req.session.username,
+                  isUser: !req.session.admin && req.session.username
             });
             // connection.end();
         });
@@ -259,7 +278,9 @@ app.get('/products', function(req, res, next) {
 
             if (err) return next(err);
             res.render("products", {
-                products: data
+                products: data,
+                isAdmin: req.session.admin && req.session.username,
+                  isUser: !req.session.admin && req.session.username
 
             });
             // connection.end();
@@ -275,7 +296,9 @@ app.get("/purchases", function(req, res, next){
             if (err) return next(err);
           // if (err) return next(err);
           res.render("purchases", {
-              purchases: data
+              purchases: data,
+              isAdmin: req.session.admin && req.session.username,
+                isUser: !req.session.admin && req.session.username
           });
           // connection.end();
       });
@@ -291,7 +314,9 @@ app.get("/users", function(req, res, next){
             if (err) return next(err);
           // if (err) return next(err);
           res.render("users", {
-              users: data
+              users: data,
+              isAdmin: req.session.admin && req.session.username,
+                isUser: !req.session.admin && req.session.username 
           });
           // connection.end();
       });
