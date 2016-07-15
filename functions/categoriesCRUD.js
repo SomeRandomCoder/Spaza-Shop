@@ -71,3 +71,18 @@ exports.delete = function(req, res, next){
 		});
 	});
 };
+
+exports.search = function(req, res, next){
+  req.getConnection(function(err, connection) {
+    var searchVal = '%'+ req.params.search +'%';
+    connection.query('SELECT * FROM categories WHERE categories.category LIKE ?', [searchVal], function(err, result){
+      if(err) return console.log(err);
+      res.render('categoriesSearch',{
+        search : result,
+        		admin: req.session.admin,
+						user: req.session.username
+
+      });
+    });
+  });
+};

@@ -141,11 +141,6 @@ console.log("USER IN SESSION", userInSession);
               || req.path.split("/")[1] === "week3"
               || req.path.split("/")[1] === "week4"
 
-
-
-
-
-
   var adminPath = req.path.split("/")[1] === "products"
                || req.path.split("/")[1] === "categories"
                || req.path.split("/")[1] === "sales"
@@ -219,10 +214,10 @@ app.get("/aboutus", function(req, res) {
 app.get("/index", function(req, res) {
   res.render("index",{isAdmin: req.session.admin && req.session.username,isUser: !req.session.admin && req.session.username });
 });
-
 app.get("/week1", function(req, res) {
   res.render("week1", week1);
 });
+
 
 app.get("/week2", function(req, res) {
   res.render("week2", week2);
@@ -316,7 +311,7 @@ app.get("/users", function(req, res, next){
           res.render("users", {
               users: data,
               isAdmin: req.session.admin && req.session.username,
-                isUser: !req.session.admin && req.session.username 
+                isUser: !req.session.admin && req.session.username
           });
           // connection.end();
       });
@@ -347,6 +342,8 @@ app.post('/categories/addCategory', categoriesCRUD.add);
 app.get('/categories/delete/:id', categoriesCRUD.delete);
 app.get('/categories/editCategory/:id', categoriesCRUD.get);
 app.post('/categories/update/:id', categoriesCRUD.update);
+app.get("/categories/search/:searchVal", categoriesCRUD.search);
+
 // app.post('/functions/categoriesCRUD', categoriesCRUD.add);
 
 // app.get('/users', usersCRUD.show);
