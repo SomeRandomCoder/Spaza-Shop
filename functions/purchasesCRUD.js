@@ -77,3 +77,18 @@ exports.delete = function(req, res, next){
 		});
 	});
 };
+
+exports.search = function(req, res, next){
+  req.getConnection(function(err, connection) {
+    var searchVal = '%'+ req.body.search +'%';
+    connection.query('SELECT purchases.product_id, DATE_FORMAT(purchases.Date, "%d %b %y")as Date,purchases.Quantity, purchases.Shop, purchases.Cost,products.product FROM purchases INNER JOIN products ON purchases.product_id = products.id WHERE products.product LIKE ?', [searchVal], function(err, result){
+      if(err) return console.log(err);
+			console.log(searchVal);
+      res.render('purchasesSearch',{
+        search : result,
+        		isAdmin: req.session.admin,
+						isUser: req.session.username
+      });
+    });
+  });
+};

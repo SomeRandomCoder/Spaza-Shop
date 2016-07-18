@@ -324,18 +324,24 @@ app.post('/sales/addSales', salesCRUD.add);
 app.get('/sales/delete/:id', salesCRUD.delete);
 app.get('/sales/editSales/:id', salesCRUD.get);
 app.post('/sales/update/:id', salesCRUD.update);
+app.get("/sales/search/:searchVal", salesCRUD.search);
+app.post("/sales/search/", salesCRUD.search);
 
 app.get('/products/addProduct', productsCRUD.showAdd);
 app.post('/products/addProduct', productsCRUD.add);
 app.get('/products/delete/:id', productsCRUD.delete);
 app.get('/products/editProduct/:id', productsCRUD.get);
 app.post('/products/update/:id', productsCRUD.update);
+app.get("/products/search/:seachVal", productsCRUD.search);
+app.post("/products/search/", productsCRUD.search);
 
 app.get('/purchases/addPurchases', purchaseCRUD.showAdd);
 app.post('/purchases/addPurchases', purchaseCRUD.add);
 app.get('/purchases/delete/:id', purchaseCRUD.delete);
 app.get('/purchases/editPurchases/:id', purchaseCRUD.get);
 app.post('/purchases/update/:id', purchaseCRUD.update);
+app.get("/purchases/search/:searchVal", purchaseCRUD.search);
+app.post("/purchases/search/", purchaseCRUD.search);
 
 app.get('/categories/addCategory', categoriesCRUD.showAdd);
 app.post('/categories/addCategory', categoriesCRUD.add);
@@ -343,6 +349,9 @@ app.get('/categories/delete/:id', categoriesCRUD.delete);
 app.get('/categories/editCategory/:id', categoriesCRUD.get);
 app.post('/categories/update/:id', categoriesCRUD.update);
 app.get("/categories/search/:searchVal", categoriesCRUD.search);
+app.post("/categories/search/", categoriesCRUD.search);
+
+
 
 // app.post('/functions/categoriesCRUD', categoriesCRUD.add);
 
@@ -352,4 +361,6 @@ app.post('/users/addUser', usersCRUD.add);
 app.get('/users/delete/:id', usersCRUD.delete);
 app.get('/users/editUsers/:id', usersCRUD.get);
 app.post('/users/update/:id', usersCRUD.update);
+app.get("/users/search/:searchVal", usersCRUD.search);
+app.post("/users/search", usersCRUD.search);
 // app.get('/users/search/:searchVal', users.search);
