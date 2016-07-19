@@ -33,21 +33,26 @@
    position: relative;
    display: inline-block;
    margin-left:auto;
-   padding-left: 10px;
+   padding-left: 350px;
+   float: right;
+   margin-left: 130px;
 }
 .dropdown1 {
    position: relative;
    display: inline-block;
    margin-left:auto;
-   padding-left: 480px;
+   /*padding-left: 480px;*/
+   float: right;
+   margin-left: 130px;
 }
 .dropdown12 {
    position: relative;
    display: inline-block;
+   float: right;
+   margin-left: 130px;
    margin-left:auto;
    padding-left:200px;
 }
-
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
    display: none;
@@ -87,10 +92,8 @@
  <nav class="navbar navbar-default">
     <div class="collapse navbar-collapse" id="mainNavBar">
       <ul class="nav navbar-nav">
-
-
+        
       {{#if isAdmin}}
-      {{#unless isUser}}
       <li class="active"><a href="/">Home</a></li>
       <li><a href="/aboutus">About Us</a></li>
       <li><a href="/index">Statistics</a></li>
@@ -102,13 +105,13 @@
       <li><a href="/purchases">Purchases</a></li>
       <li><a href="/users">Users</a></li>
 
-      <div class="dropdown1">
+      <!-- <div class="dropdown1"> -->
       <!-- <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
 
-    </div>
+    <!-- </div> -->
     <ul class="nav navbar-nav navbar-right">
       <div class="dropdown">
-       <button class="dropbtn">Current user: {{users.username}}</button>
+       <button class="dropbtn">Current user: </button>
        <div class="dropdown-content">
          <a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
          <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
@@ -116,89 +119,47 @@
     </div>
    </div>
   </ul>
-      {{/unless}}
-      {{/if}}
+ </ul>
+</div>
+</div>
+</nav>
 
-      {{#if isUser}}
-      {{#unless isAdmin}}
-      <li class="active"><a href="/">Home</a></li>
-      <li><a href="/aboutus">About Us</a></li>
-      <li><a href="/index">Statistics</a></li>
-      <li><a href="/categories">Categories</a></li>
-      <li><a href="/products">Products</a></li>
-      <!-- <div class ="spacer" width="20px"></div> -->
 
-      <div class="dropdown1">
-        <!-- <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
 
+  {{else}}
+
+  <li class="active"><a href="/">Home</a></li>
+  <li><a href="/aboutus">About Us</a></li>
+  <li><a href="/index">Statistics</a></li>
+  <li><a href="/categories">Categories</a></li>
+  <li><a href="/products">Products</a></li>
+  <!-- <div class ="spacer" width="20px"></div> -->
+
+   <!-- <div class="dropdown1">
+     <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+
+  </div>  -->
+  <ul class="nav navbar-nav navbar-right">
+    <div class="dropdown1">
+      <div class="dropdown">
+      <button class="dropbtn">Current user:</button>
+      <div class="dropdown-content">
+        <a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+        <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+        <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
       </div>
-      <ul class="nav navbar-nav navbar-right">
-        <div class="dropdown12">
-          <div class="dropdown">
-          <button class="dropbtn">Current user:</button>
-          <div class="dropdown-content">
-            <a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-            <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-            <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-          </div>
-        </div>
-      </ul>
-
-
-      {{/unless}}
-      {{/if}}
-
-      {{#unless isAdmin}}
-      {{#unless isUser}}
-      
-      <div class="dropdown1">
-      <!-- <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
-
     </div>
-    <ul class="nav navbar-nav navbar-right">
-      <div class="dropdown1">
-       <button class="dropbtn">Current user: {{users.username}}</button>
-       <div class="dropdown-content">
-         <a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-         <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-         <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-    </div>
-   </div>
-  </ul>
-      {{/unless}}
-      {{/unless}}
-
-
-
-        <!-- <li class="active"><a href="/">Home</a></li>
-        <li><a href="/aboutus">About Us</a></li>
-        <li><a href="/index">Statistics</a></li>
-
-
-        <li><a href="/categories">Categories</a></li>
-        <li><a href="/sales">Sales</a></li>
-        <li><a href="/products">Products</a></li>
-        <li><a href="/purchases">Purchases</a></li>
-        <li><a href="/users">Users</a></li>
-
-        <div class="dropdown1">
-        <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-
-      </div>
-      <ul class="nav navbar-nav navbar-right">
-        <div class="dropdown">
-         <button class="dropbtn">Current user: {{users.username}}</button>
-         <div class="dropdown-content">
-           <a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-           <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-           <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-      </div>
-     </div>
-    </ul>
-   </ul>
   </div>
- </div>
-</nav> -->
+  </ul>
+{{/if}}
+
+{{#unless isAdmin}}
+{{#unless isUser}}
+<div class="dropdown12"></div>
+
+{{/unless}}
+{{/unless}}
+
 
 
 </ul>

@@ -9,18 +9,18 @@
     <!-- </select> -->
 	</div>
   <div>
-		<label for="date">date</label>
+		<h4>date</h4>
 		<input class="datepicker" type="date" name="date" value="{{data.date}}">
 	</div>
   <div>
-		<label for="sold">quantity</label>
+		<h4>quantity</h4>
 		<input type="number" name="sold" value="{{data.sold}}">
 	</div>
   <div>
-		<label for="price">cost</label>
+		<h4>cost</h4>
 		<input type="text" name="price" value="{{data.price}}">
 	</div>
-  <label>Product</label>
+  <h4>Product</h4>
   <select class="browser-default" name="product_id">
     {{#sales}}
     <option value="{{id}}"> {{product}}</option>
@@ -28,6 +28,8 @@
   </select>
 
 
-	<input type="submit" value="Edit Sale">
+	<input
+		<button type ="submit" class="btn btn-primary"> </button>
+
 </form>
 </div>

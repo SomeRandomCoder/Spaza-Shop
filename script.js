@@ -115,6 +115,7 @@ var week4 = {
 
 app.use(function(req,res,next){
   var isAdmin = req.session.admin && req.session.username,
+
       isUser = !req.session.admin && req.session.username,
       userInSession = req.session.username,
       pathIsLogin = req.path === "/login",
@@ -141,6 +142,7 @@ console.log("USER IN SESSION", userInSession);
               || req.path.split("/")[1] === "week3"
               || req.path.split("/")[1] === "week4"
 
+
   var adminPath = req.path.split("/")[1] === "products"
                || req.path.split("/")[1] === "categories"
                || req.path.split("/")[1] === "sales"
@@ -150,6 +152,7 @@ console.log("USER IN SESSION", userInSession);
                || req.path.split("/")[1] === "editSales"
                || req.path.split("/")[1] === "editPurchases"
                || req.path.split("/")[1] === "editProducts"
+
 
 
 
@@ -255,11 +258,18 @@ app.get('/categories', function(req, res, next) {
         if (err) return next(err);
         connection.query("SELECT categories.id, categories.category FROM categories", [],function(err, data) {
             if (err) return next(err);
-            res.render("categories", {
+            if(req.session.admin){
+              res.render("categories", {
                 categories: data,
                 isAdmin: req.session.admin && req.session.username,
                   isUser: !req.session.admin && req.session.username
             });
+          }
+          else{
+            res.render("categoriesRegUser",{
+              categories: data
+            });
+          }
             // connection.end();
         });
     });
@@ -270,14 +280,19 @@ app.get('/products', function(req, res, next) {
         connection = mysql.createConnection(dbOptions);
         if (err) return next(err);
         connection.query("SELECT products.id, products.product ,categories.category FROM products, categories WHERE products.category_id = categories.id  ORDER BY `products`.`id` ASC ", [], function(err, data) {
-
             if (err) return next(err);
+            if(req.session.admin){
             res.render("products", {
                 products: data,
                 isAdmin: req.session.admin && req.session.username,
                   isUser: !req.session.admin && req.session.username
-
             });
+          }
+          else{
+            res.render("productsRegUser",{
+              products: data
+            });
+          }
             // connection.end();
         });
     });

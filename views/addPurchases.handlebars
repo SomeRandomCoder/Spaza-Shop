@@ -7,7 +7,7 @@
 
 
 	<div id="DateDiv">
-			<label for="date">Date</label>
+			<h4>Date</h4>
 			<input  class="datepicker" type="date"  name="date" >
 		</div>
 
@@ -16,15 +16,15 @@
 
 
   <div>
-		<label for="quantity">quantity</label>
+		<h4>quantity</h4>
 		<input type="number" name="quantity" value="{{quantity}}">
 	</div>
   <div>
-		<label for="cost">cost</label>
+		<h4>cost</h4>
 		<input type="text" name="cost" value="{{cost}}">
 	</div>
 
-  <label>Product</label>
+  <h4>Product</h4>
   <select class="browser-default" name="product_id">
     {{#purchases}}
     <option value="{{id}}"> {{product}}</option>
@@ -34,13 +34,13 @@
   </select>
 
 		<div class="">
-			<label>Shop</label>
+			<h4>Shop</h4>
 
 				<input type="text" name="shop" value="{{shop}}">
 
 		</div>
 
-<button onclick="dateConvertion()">Submit Purchase</button>
+<button class="btn btn-primary"onclick="dateConvertion()">Submit Purchase</button>
 	<!-- <input type="submit" value="Submit Purchase" onclick="dateConvertion()" > -->
 </form>
 </div>

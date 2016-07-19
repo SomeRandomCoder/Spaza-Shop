@@ -9,15 +9,15 @@
   <!-- <ul id="productsSearch"> -->
   <li class="col-md-4 head"><b>Product</b></li>
   <li class="col-md-4 head"><b>Category</b></li>
-  <a href="/products/addProduct"><li class="btn col-md-4 buttons"><b>Add Product</b></li></a>
+  <a href="/products/addProduct" class="btn btn-primary col-md-4 "><b>Add Product</b></a>
 
 
         {{#products}}
 
           <li class="col-md-4 db-List"> {{product}}</li>
           <li class="col-md-4 db-List">{{category}}</li>
-          <a href="/products/editProduct/{{id}}" class="btn col-md-2 buttons">Edit</a>
-          <a href="/products/delete/{{id}}" class="btn col-md-2 buttons">Delete</a>
+          <a href="/products/editProduct/{{id}}" class="btn btn-primary col-md-2 ">Edit</a>
+          <a href="/products/delete/{{id}}" class="btn btn-primary col-md-2 ">Delete</a>
         {{/products}}
   </ul>
 <!-- </ul> -->

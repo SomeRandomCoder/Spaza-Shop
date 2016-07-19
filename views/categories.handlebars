@@ -6,13 +6,13 @@
 </form>
 
   <li class="col-md-6 head"><b>Category</b></li>
-  <a href="/categories/addCategory"><li class="btn col-md-6 buttons"><b>Add Category</b></li></a>
+  <a href="/categories/addCategory"><div class="btn btn-primary col-md-6 "><b>Add Category</b></div></a>
 
 
         {{#categories}}
 
           <li class="col-md-6 db-List"> {{category}}</li>
-          <a href="/categories/editCategory/{{id}}" class="btn col-md-4 buttons">Edit</a>
-          <a href="/categories/delete/{{id}}" class="btn col-md-2 buttons">Delete</a>
+          <a href="/categories/editCategory/{{id}}" class="btn btn-primary col-md-4 ">Edit</a>
+          <a href="/categories/delete/{{id}}" class="btn btn-primary col-md-2 ">Delete</a>
         {{/categories}}
     </ul>

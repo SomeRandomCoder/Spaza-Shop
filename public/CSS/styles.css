@@ -53,7 +53,7 @@
 }
 .body{
   /*background-color: #AFB5B5;*/
-  background: linear-gradient(to right,red, yellow);
+  background: linear-gradient(to right, blue,aqua);
 }
 
 .Picture{
@@ -80,10 +80,11 @@
   padding-top: 2%;
 }
 
-#body{
-  background: linear-gradient(to right,red, yellow);
-  /*background-color: #AFB5B5;*/
-}
+/*#body{
+  background: linear-gradient(to right,white, yellow);
+  background-color: #AFB5B5;
+}*/
+
 #tradingHours{
   width: 50%;
   height:100%;
@@ -106,6 +107,16 @@
   list-style-type: none;
   padding-left:25%;
 }
+
+.row-list li{
+  
+  background-color: white;
+  /*border: 2px double black;*/
+
+
+
+}
+
 .db-List{
     height: 34px;
     border: 1px solid black;

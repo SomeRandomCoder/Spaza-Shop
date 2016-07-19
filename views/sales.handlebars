@@ -11,7 +11,7 @@
   <li class="col-md-4 head">Product</li>
   <li class="col-md-2 head">Amount Sold</li>
   <li class="col-md-2 head">Unit Price</li>
-  <a href="sales/addSales"><li class="btn col-md-2 buttons">Add Sale</li></a>
+  <a href="sales/addSales"><div class="btn btn-primary col-md-2">Add Sale</div></a>
         {{#sales}}
 
 
@@ -19,7 +19,7 @@
         <li class="col-md-4 db-List"> {{product}}</li>
         <li class="col-md-2 db-List"> {{sold}}</li>
         <li class="col-md-2 db-List"> {{price}}</li>
-        <a href="sales/editSales/{{id}}"><li class="btn col-md-1 buttons">edit</li></a>
-        <a href="sales/delete/{{id}}"><li class="btn col-md-1 buttons">delete</li></a>
+        <a href="sales/editSales/{{id}}"><div class="btn btn-primary col-md-1 ">edit</div></a>
+        <a href="sales/delete/{{id}}"><div class="btn btn-primary col-md-1 ">delete</div></a>
         {{/sales}}
     </ul>

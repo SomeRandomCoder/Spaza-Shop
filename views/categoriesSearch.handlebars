@@ -1,8 +1,15 @@
 <ul class="row-list">
+  <form action ="/categories/search/" method="POST">
+     <input type="text" name="search" placeholder="Search.." >
+    <button> <input type="submit" value="submit"></button>
 
-  <li class="col-md-8 head"><b>Category</b></li>
+  </form>
+
+  <li class="col-md-12 head"><b>Category</b></li>
         {{#search}}
 
-          <li class="col-md-8 db-List">{{category}}</li>
+          <li class="col-md-12 db-List">{{category}}</li>
         {{/search}}
+        <a href="" class="btn btn-primary" role="button" onClick="history.go(-1); return true;">Back</a>
+
     </ul>

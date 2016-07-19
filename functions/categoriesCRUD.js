@@ -7,6 +7,8 @@ exports.showAdd = function(req, res){
         	if (err) return next(err);
     		res.render( 'addCategory', {
 					categories : categories,
+					isAdmin: req.session.admin,
+					isUser: req.session.username
     		});
       	});
 	});
@@ -17,6 +19,7 @@ exports.add = function (req, res, next) {
 		if (err) return next(err);
 		var data = {
       		category : req.body.category,
+
   		};
 
 		connection.query('insert into categories set ?', data, function(err, results) {
@@ -38,7 +41,9 @@ exports.get = function(req, res, next){
 				});
 				res.render('editCategory', {
 					categories : categories,
-					data : item
+					data : item,
+					isAdmin: req.session.admin,
+					isUser: req.session.username
 				});
 			});
 		});

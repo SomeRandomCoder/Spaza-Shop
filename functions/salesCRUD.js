@@ -84,9 +84,9 @@ exports.search = function(req, res, next){
 			console.log(searchVal);
       res.render('salesSearch',{
         search : result,
-        		isAdmin: req.session.admin,
-						isUser: req.session.username,
-						
+				isAdmin: req.session.admin,
+				isUser: req.session.username
+
       });
     });
   });

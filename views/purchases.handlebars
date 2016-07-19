@@ -12,7 +12,7 @@
   <li class="col-md-1 head">Unit Price</li>
   <li class="col-md-2 head">Shop</li>
 
-  <a href="purchases/addPurchases"><li class="btn col-md-2 buttons">Add Purchase</li></a>
+  <a href="purchases/addPurchases"><div class="btn btn-primary col-md-2 ">Add Purchase</div></a>
         {{#purchases}}
 
 
@@ -22,7 +22,7 @@
         <li class="col-md-1 db-List"> {{cost}}</li>
         <li class="col-md-2 db-List"> {{shop}}</li>
 
-        <a href="purchases/editPurchases/{{id}}"><li class="btn col-md-1 buttons">edit</li></a>
-        <a href="purchases/delete/{{id}}"><li class="btn col-md-1 buttons">delete</li></a>
+        <a href="purchases/editPurchases/{{id}}"><div class="btn btn-primary col-md-1">edit</div></a>
+        <a href="purchases/delete/{{id}}"><div class="btn btn-primary col-md-1 ">delete</div></a>
         {{/purchases}}
     </ul>

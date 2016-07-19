@@ -6,15 +6,18 @@
 
   </form>
 
-
-
+  <!-- <ul id="productsSearch"> -->
   <li class="col-md-6 head"><b>Product</b></li>
   <li class="col-md-6 head"><b>Category</b></li>
-        {{#search}}
 
-          <li class="col-md-6 db-List">{{product}}</li>
+
+
+        {{#products}}
+
+          <li class="col-md-6 db-List"> {{product}}</li>
           <li class="col-md-6 db-List">{{category}}</li>
 
-        {{/search}}
+        {{/products}}
         <a href="" class="btn btn-primary" role="button" onClick="history.go(-1); return true;">Back</a>
-    </ul>
+        
+  </ul>

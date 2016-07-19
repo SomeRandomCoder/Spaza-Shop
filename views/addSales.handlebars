@@ -3,23 +3,26 @@
 
 <form action="/sales/addSales" method="POST">
   <div>
-    <label for="date">date</label>
+    <h4>date</h4>
     <input class="datepicker" type="date" name="date" value="{{data.date}}">
   </div>
   <div>
-    <label for="sold">quantity</label>
+    <h4>quantity</h4>
     <input type="number" name="sold" value="{{data.sold}}">
   </div>
-  <label>Product</label>
+  <h4>Product</h4>
   <select class="browser-default" name="product_id">
     {{#sales}}
     <option value="{{id}}"> {{product}}</option>
     {{/sales}}
   </select>
   <div>
-    <label for="price">price</label>
+    
+    <h4 for="price">price</h4l>
     <input type="text" name="price" value="{{data.price}}">
   </div>
-	<input type="submit" value="Add Sale">
+  <input
+  	<button type ="submit" class="btn btn-primary"> </button>
+
 </form>
 </div>
