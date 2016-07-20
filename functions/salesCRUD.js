@@ -78,14 +78,15 @@ exports.delete = function(req, res, next){
 
 exports.search = function(req, res, next){
   req.getConnection(function(err, connection) {
-    var searchVal = '%'+ req.body.search +'%';
+    var searchVal = '%'+ req.params.searchVal +'%';
     connection.query('SELECT sales.id, DATE_FORMAT(sales.date, "%d %b %y")as date,sales.sold, sales.price, products.product FROM sales INNER JOIN products ON sales.product_id = products.id WHERE products.product LIKE ?', [searchVal], function(err, result){
       if(err) return console.log(err);
 			console.log(searchVal);
       res.render('salesSearch',{
         search : result,
 				isAdmin: req.session.admin,
-				isUser: req.session.username
+				isUser: req.session.username,
+				layout: false
 
       });
     });

@@ -1,9 +1,9 @@
-<ul class="row-list">
 <form action ="/categories/search/" method="POST">
-   <input type="text" name="search" placeholder="Search.." >
-  <button> <input type="submit" value="submit"></button>
+   <input id="searchBar" type="text" name="searchVal" placeholder="Search.." >
+  <!-- <button> <input type="submit" value="submit"></button> -->
 
 </form>
+<ul id="categoriesSearch"class="row-list">
 
   <li class="col-md-6 head"><b>Category</b></li>
   <a href="/categories/addCategory"><div class="btn btn-primary col-md-6 "><b>Add Category</b></div></a>
@@ -16,3 +16,17 @@
           <a href="/categories/delete/{{id}}" class="btn btn-primary col-md-2 ">Delete</a>
         {{/categories}}
     </ul>
+
+    <script>
+    $(document).ready(function() {
+      $('#searchBar').keyup(function(){
+        var searchVal= $("#searchBar").val();
+        $.get("/categories/search/" + searchVal, function(results){
+          console.log(searchVal);
+          $("#categoriesSearch").html(results)
+        });
+
+      })
+
+    })
+    </script>

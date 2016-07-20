@@ -44,6 +44,9 @@ module.exports = function(req, res) {
              else {
                 return res.redirect("/login");
             }
+
+            
+
         });
     });
 };

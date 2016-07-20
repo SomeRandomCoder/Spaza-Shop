@@ -1,10 +1,10 @@
-<ul class="row-list" >
 
   <form action ="/purchases/search/" method="POST">
-     <input type="text" name="search" placeholder="Search.." >
-    <button> <input type="submit" value="submit"></button>
+     <input id="searchBar" type="text" name="searchVal" placeholder="Search.." >
+    <!-- <button> <input type="submit" value="submit"></button> -->
 
   </form>
+  <ul  id="purchasesSearch" class="row-list" >
 
   <li class="col-md-2 head">Date</li>
   <li class="col-md-4 head">Product</li>
@@ -26,3 +26,17 @@
         <a href="purchases/delete/{{id}}"><div class="btn btn-primary col-md-1 ">delete</div></a>
         {{/purchases}}
     </ul>
+
+    <script>
+    $(document).ready(function() {
+      $('#searchBar').keyup(function(){
+        var searchVal= $("#searchBar").val();
+        $.get("/purchases/search/" + searchVal, function(results){
+          console.log(searchVal);
+          $("#purchasesSearch").html(results)
+        });
+
+      })
+
+    })
+    </script>

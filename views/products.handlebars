@@ -1,11 +1,11 @@
-<ul class="row-list">
 
   <form action ="/products/search/" method="POST">
-     <input id="searchBar" type="text" name="search" placeholder="Search.." >
-    <button> <input type="submit" value="submit"></button>
+     <input id="searchBar" type="text" name="searchVal" placeholder="Search.." >
+    <!-- <button> <input type="submit" value="submit"></button> -->
 
   </form>
 
+  <ul  id="productsSearch" class="row-list">
   <!-- <ul id="productsSearch"> -->
   <li class="col-md-4 head"><b>Product</b></li>
   <li class="col-md-4 head"><b>Category</b></li>
@@ -23,15 +23,16 @@
 <!-- </ul> -->
 
 
-    <!-- <script>
-    $(document).ready(function() {
-      $('#searchBar').keyup(function(){
-        var searchVal= $("#searchBar").val();
-        $.get("/products/search/" + searchVal, function(results){
-          $("#productsSearch").html(results)
-        });
+<script>
+$(document).ready(function() {
+  $('#searchBar').keyup(function(){
+    var searchVal= $("#searchBar").val();
+    $.get("/products/search/" + searchVal, function(results){
+      console.log(searchVal);
+      $("#productsSearch").html(results)
+    });
 
-      })
+  })
 
-    })
-    </script> -->
+})
+</script>

@@ -79,14 +79,15 @@ exports.delete = function(req, res, next){
 
 exports.search = function(req, res, next){
   req.getConnection(function(err, connection) {
-    var searchVal = '%'+ req.body.search +'%';
+    var searchVal = '%'+ req.params.searchVal +'%';
     connection.query('SELECT * FROM categories WHERE categories.category LIKE ?', [searchVal], function(err, result){
       if(err) return console.log(err);
 			console.log(searchVal);
       res.render('categoriesSearch',{
         search : result,
         		isAdmin: req.session.admin,
-						isUser: req.session.username
+						isUser: req.session.username,
+						layout:false
 
       });
     });

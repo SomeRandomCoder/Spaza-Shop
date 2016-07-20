@@ -347,7 +347,7 @@ app.post('/products/addProduct', productsCRUD.add);
 app.get('/products/delete/:id', productsCRUD.delete);
 app.get('/products/editProduct/:id', productsCRUD.get);
 app.post('/products/update/:id', productsCRUD.update);
-app.get("/products/search/:seachVal", productsCRUD.search);
+app.get("/products/search/:searchVal", productsCRUD.search);
 app.post("/products/search/", productsCRUD.search);
 
 app.get('/purchases/addPurchases', purchaseCRUD.showAdd);
