@@ -10,6 +10,29 @@ exports.showAdd = function(req, res){
 	});
 };
 
+exports.show= function(req, res) {
+    req.getConnection(function(err, connection) {
+
+        if (err) return next(err);
+        connection.query("SELECT products.id, products.product ,categories.category FROM products, categories WHERE products.category_id = categories.id  ORDER BY `products`.`id` ASC ", [], function(err, data) {
+            if (err) return next(err);
+            if(req.session.admin){
+            res.render("products", {
+                products: data,
+                isAdmin: req.session.admin && req.session.username,
+                  isUser: !req.session.admin && req.session.username
+            });
+          }
+          else{
+            res.render("productsRegUser",{
+              products: data
+            });
+          }
+            // connection.end();
+        });
+    });
+};
+
 exports.add = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) return next(err);

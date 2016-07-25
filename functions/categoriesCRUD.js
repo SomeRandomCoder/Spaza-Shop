@@ -14,6 +14,30 @@ exports.showAdd = function(req, res){
 	});
 };
 
+exports.show= function(req, res) {
+    req.getConnection(function(err, connection) {
+
+        // connection = mysql.createConnection(dbOptions);
+        if (err) return next(err);
+        connection.query("SELECT categories.id, categories.category FROM categories", [],function(err, data) {
+            if (err) return next(err);
+            if(req.session.admin){
+              res.render("categories", {
+                categories: data,
+                isAdmin: req.session.admin && req.session.username,
+                  isUser: !req.session.admin && req.session.username
+            });
+          }
+          else{
+            res.render("categoriesRegUser",{
+              categories: data
+            });
+          }
+            // connection.end();
+        });
+    });
+};
+
 exports.add = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) return next(err);

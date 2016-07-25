@@ -11,6 +11,23 @@ exports.showAdd = function(req, res, next){
       	});
 	});
 };
+exports.show=function(req, res, next){
+  req.getConnection(function(err, connection) {
+
+      if (err) return next(err);
+        connection.query("SELECT DATE_FORMAT(purchases.Date,'%d %b %y') as Date,purchases.id, products.product, purchases.stockItem, purchases.quantity, purchases.cost ,purchases.shop FROM purchases, products WHERE purchases.product_id = products.id ORDER BY `purchases`.`Date` ASC ", function(err, data) {
+            if (err) return next(err);
+          // if (err) return next(err);
+          res.render("purchases", {
+              purchases: data,
+              isAdmin: req.session.admin && req.session.username,
+                isUser: !req.session.admin && req.session.username
+          });
+          // connection.end();
+      });
+  });
+
+};
 
 exports.add = function (req, res, next) {
 	req.getConnection(function(err, connection){

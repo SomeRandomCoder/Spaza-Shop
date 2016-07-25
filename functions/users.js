@@ -33,6 +33,23 @@ exports.showAdd = function(req, res) {
     res.render('addUser');
 };
 
+exports.show=function(req, res){
+  req.getConnection(function(err, connection) {
+      
+      if (err) return next(err);
+        connection.query("SELECT users.id, users.username, users.locked, users.admin FROM users ORDER BY users.id", function(err, data) {
+            if (err) return next(err);
+          // if (err) return next(err);
+          res.render("users", {
+              users: data,
+              isAdmin: req.session.admin && req.session.username,
+                isUser: !req.session.admin && req.session.username
+          });
+          // connection.end();
+      });
+  });
+
+};
 
 exports.add = function(req, res, next) {
     req.getConnection(function(err, connection) {

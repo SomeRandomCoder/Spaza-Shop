@@ -1,31 +1,31 @@
-var fs = require('fs');
-var handlebars = require('express-handlebars');
-var express = require('express');
-var app = express();
-var mysql = require('mysql');
-var myConnection = require("express-myconnection");
-var bodyParser = require('body-parser');
-var session = require("express-session");
-var bcrypt=require("bcrypt");
-var flash=require('express-flash');
+var fs = require('fs'),
+ handlebars = require('express-handlebars'),
+ express = require('express'),
+ app = express(),
+ mysql = require('mysql'),
+ myConnection = require("express-myconnection"),
+ bodyParser = require('body-parser'),
+ session = require("express-session"),
+ bcrypt=require("bcrypt"),
+ flash=require('express-flash');
 
 
-var weeklySales = require('./functions/weeklySales');
-var mostPopularProduct = require('./functions/mostPopularProduct');
-var leastPopularProduct = require('./functions/leastPopularProduct');
-var mostPopularCategory = require('./functions/mostPopularCategory');
-var leastPopularCategory = require('./functions/leastPopularCategory');
-var mostProfitableProduct = require('./functions/mostProfitableProduct');
-var mostProfitableCategory = require("./functions/mostProfitableCategory");
-var categories = require("./functions/mostPopularCategory");
-var bought = require("./functions/mostProfitableCategory");
-var categoriesCRUD=require('./functions/categoriesCRUD');
-var productsCRUD=require("./functions/productsCRUD");
-var salesCRUD=require("./functions/salesCRUD");
-var purchaseCRUD=require("./functions/purchasesCRUD");
-var signup=require("./functions/signup");
-var usersCRUD=require("./functions/users");
-var login=require("./functions/login");
+var weeklySales = require('./functions/weeklySales'),
+ mostPopularProduct = require('./functions/mostPopularProduct'),
+ leastPopularProduct = require('./functions/leastPopularProduct'),
+ mostPopularCategory = require('./functions/mostPopularCategory'),
+ leastPopularCategory = require('./functions/leastPopularCategory'),
+ mostProfitableProduct = require('./functions/mostProfitableProduct'),
+ mostProfitableCategory = require("./functions/mostProfitableCategory"),
+ categories = require("./functions/mostPopularCategory"),
+ bought = require("./functions/mostProfitableCategory"),
+ categoriesCRUD=require('./functions/categoriesCRUD'),
+ productsCRUD=require("./functions/productsCRUD"),
+ salesCRUD=require("./functions/salesCRUD"),
+ purchaseCRUD=require("./functions/purchasesCRUD"),
+ signup=require("./functions/signup"),
+ usersCRUD=require("./functions/users"),
+ login=require("./functions/login");
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -34,7 +34,16 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
+
 app.use(flash());
+
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: false
+}));
+
+app.use(myConnection(mysql, dbOptions, "single"));
 
 var dbOptions = {
   host: "127.0.0.1",
@@ -44,14 +53,11 @@ var dbOptions = {
   database: 'nelisaDB'
 };
 
-app.use(myConnection(mysql, dbOptions, "single"));
-
 var connection = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',
   password: "mxmaolqk",
   database: 'nelisaDB'
-
 });
 
 var server = app.listen(3000, function() {
@@ -60,17 +66,10 @@ var server = app.listen(3000, function() {
   console.log("app listening at http://%s:%s", host, port);
 });
 
-
 app.engine("handlebars", handlebars({
   defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
-
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: false
-}));
 
   var week1 = {
     mostPopularProduct: mostPopularProduct.mostPopularProduct(1),
@@ -116,20 +115,14 @@ var week4 = {
 
 app.use(function(req,res,next){
   var isAdmin = req.session.admin && req.session.username,
-
       isUser = !req.session.admin && req.session.username,
       userInSession = req.session.username,
       pathIsLogin = req.path === "/login",
       pathIsSignUp = req.path === "/signup";
 
-// console.log("LOOPING THROUGH FOR THE %d TIME", ++track);
 console.log("IS ADMIN", isAdmin);
 console.log("IS USER", isUser);
 console.log("USER IN SESSION", userInSession);
-// console.log("PATH IS LOGIN", pathIsLogin);
-// console.log("PATH IS SIGN UP", pathIsSignUp);
-// console.log("THIS IS REQ.PATH", req.path);
-// console.log("THIS IS REQ.PATH.SPLIT", req.path.split("/")[1]);
 
   var generalPath = req.path.split("/")[1] === "login"
               || req.path.split("/")[1] === "logout"
@@ -143,7 +136,6 @@ console.log("USER IN SESSION", userInSession);
               || req.path.split("/")[1] === "week3"
               || req.path.split("/")[1] === "week4"
 
-
   var adminPath = req.path.split("/")[1] === "products"
                || req.path.split("/")[1] === "categories"
                || req.path.split("/")[1] === "sales"
@@ -154,47 +146,32 @@ console.log("USER IN SESSION", userInSession);
                || req.path.split("/")[1] === "editPurchases"
                || req.path.split("/")[1] === "editProducts"
 
-
-
-
-
   if (!userInSession && req.path==="/") {
-    // console.log("USER NOT SIGNED UP OR LOGGED IN REDIRECTING TO SIGNUP/LOGIN");
-      res.redirect("/login");
+    res.redirect("/login");
   } else if (!userInSession && (pathIsLogin || pathIsSignUp)) {
     next();
   }
   else if (isUser && generalPath) {
-    // console.log("IS USER AND GENERAL PATH MOVING ON TO NEXT MIDDLEWARE");
     next();
   } else if (isUser && adminPath) {
-    // console.log("IS USER BUT ATTEMPTING TO GO TO ADMIN PATH REDIRECTING PATH TO '/'");
     res.redirect("/");
   } else if (isAdmin && (adminPath || generalPath)) {
-    // console.log("IS ADMIN AND PATH IS ADMIN OR GENERAL. MOVING ON TO NEXT MIDDLEWARE");
     next();
   }
 
 });
 
 app.get("/signup", function(req, res, next){
-  console.log("DIRECTED TO SIGNUP ROUTE");
   req.getConnection(function(err, connection){
-    // connection = mysql.createConnection(dbOptions);
     if(err) return next(err);
-    console.log("RENDERING SIGNUP PAGE");
     res.render("signup");
   });
 });
-
 app.post('/signup', signup);
 
 app.get("/login", function(req, res, next){
-  console.log("DIRECTED TO LOG IN ROUTE");
   req.getConnection(function(err, connection){
-    // connection = mysql.createConnection(dbOptions);
     if(err) return next(err);
-    console.log("RENDERING LOG IN PAGE ");
     res.render("login");
   });
 });
@@ -205,7 +182,6 @@ app.get('/logout', function(req, res) {
     delete req.session.admin;
     res.redirect('/login');
 });
-
 
 app.get("/", function(req, res) {
   res.render("homePage", {isAdmin: req.session.admin && req.session.username,isUser: !req.session.admin && req.session.username });
@@ -218,10 +194,10 @@ app.get("/aboutus", function(req, res) {
 app.get("/index", function(req, res) {
   res.render("index",{isAdmin: req.session.admin && req.session.username,isUser: !req.session.admin && req.session.username });
 });
+
 app.get("/week1", function(req, res) {
   res.render("week1", week1);
 });
-
 
 app.get("/week2", function(req, res) {
   res.render("week2", week2);
@@ -235,106 +211,8 @@ app.get("/week4", function(req, res) {
   res.render("week4", week4);
 });
 
-app.get("/sales", function(req, res, next){
-  req.getConnection(function(err, connection) {
-      connection = mysql.createConnection(dbOptions);
-      if (err) return next(err);
-      connection.query("SELECT   DATE_FORMAT(sales.date,'%d %b %y') as date,sales.id, sales.product_id, sales.sold, sales.price ,products.product FROM sales, products WHERE sales.product_id = products.id AND sales.sold > 0 ORDER BY `sales`.`date` ASC ", function(err, data) {
-            if (err) return next(err);
-          if (err) return next(err);
-          res.render("sales", {
-              sales: data,
-              isAdmin: req.session.admin && req.session.username,
-                isUser: !req.session.admin && req.session.username
-          });
-          // connection.end();
-      });
-  });
-});
 
-app.get('/categories', function(req, res, next) {
-    req.getConnection(function(err, connection) {
-      connection = mysql.createConnection(dbOptions);
-        // connection = mysql.createConnection(dbOptions);
-        if (err) return next(err);
-        connection.query("SELECT categories.id, categories.category FROM categories", [],function(err, data) {
-            if (err) return next(err);
-            if(req.session.admin){
-              res.render("categories", {
-                categories: data,
-                isAdmin: req.session.admin && req.session.username,
-                  isUser: !req.session.admin && req.session.username
-            });
-          }
-          else{
-            res.render("categoriesRegUser",{
-              categories: data
-            });
-          }
-            // connection.end();
-        });
-    });
-});
-
-app.get('/products', function(req, res, next) {
-    req.getConnection(function(err, connection) {
-        connection = mysql.createConnection(dbOptions);
-        if (err) return next(err);
-        connection.query("SELECT products.id, products.product ,categories.category FROM products, categories WHERE products.category_id = categories.id  ORDER BY `products`.`id` ASC ", [], function(err, data) {
-            if (err) return next(err);
-            if(req.session.admin){
-            res.render("products", {
-                products: data,
-                isAdmin: req.session.admin && req.session.username,
-                  isUser: !req.session.admin && req.session.username
-            });
-          }
-          else{
-            res.render("productsRegUser",{
-              products: data
-            });
-          }
-            // connection.end();
-        });
-    });
-});
-
-app.get("/purchases", function(req, res, next){
-  req.getConnection(function(err, connection) {
-      connection = mysql.createConnection(dbOptions);
-      if (err) return next(err);
-        connection.query("SELECT DATE_FORMAT(purchases.Date,'%d %b %y') as Date,purchases.id, products.product, purchases.stockItem, purchases.quantity, purchases.cost ,purchases.shop FROM purchases, products WHERE purchases.product_id = products.id ORDER BY `purchases`.`Date` ASC ", function(err, data) {
-            if (err) return next(err);
-          // if (err) return next(err);
-          res.render("purchases", {
-              purchases: data,
-              isAdmin: req.session.admin && req.session.username,
-                isUser: !req.session.admin && req.session.username
-          });
-          // connection.end();
-      });
-  });
-
-});
-
-app.get("/users", function(req, res, next){
-  req.getConnection(function(err, connection) {
-      connection = mysql.createConnection(dbOptions);
-      if (err) return next(err);
-        connection.query("SELECT users.id, users.username, users.locked, users.admin FROM users ORDER BY users.id", function(err, data) {
-            if (err) return next(err);
-          // if (err) return next(err);
-          res.render("users", {
-              users: data,
-              isAdmin: req.session.admin && req.session.username,
-                isUser: !req.session.admin && req.session.username
-          });
-          // connection.end();
-      });
-  });
-
-});
-
+app.get('/sales', salesCRUD.show);
 app.get('/sales/addSales', salesCRUD.showAdd);
 app.post('/sales/addSales', salesCRUD.add);
 app.get('/sales/delete/:id', salesCRUD.delete);
@@ -343,6 +221,7 @@ app.post('/sales/update/:id', salesCRUD.update);
 app.get("/sales/search/:searchVal", salesCRUD.search);
 app.post("/sales/search/", salesCRUD.search);
 
+app.get('/products', productsCRUD.show);
 app.get('/products/addProduct', productsCRUD.showAdd);
 app.post('/products/addProduct', productsCRUD.add);
 app.get('/products/delete/:id', productsCRUD.delete);
@@ -351,6 +230,7 @@ app.post('/products/update/:id', productsCRUD.update);
 app.get("/products/search/:searchVal", productsCRUD.search);
 app.post("/products/search/", productsCRUD.search);
 
+app.get('/purchases',purchaseCRUD.show);
 app.get('/purchases/addPurchases', purchaseCRUD.showAdd);
 app.post('/purchases/addPurchases', purchaseCRUD.add);
 app.get('/purchases/delete/:id', purchaseCRUD.delete);
@@ -359,6 +239,7 @@ app.post('/purchases/update/:id', purchaseCRUD.update);
 app.get("/purchases/search/:searchVal", purchaseCRUD.search);
 app.post("/purchases/search/", purchaseCRUD.search);
 
+app.get('/categories', categoriesCRUD.show);
 app.get('/categories/addCategory', categoriesCRUD.showAdd);
 app.post('/categories/addCategory', categoriesCRUD.add);
 app.get('/categories/delete/:id', categoriesCRUD.delete);
@@ -367,11 +248,7 @@ app.post('/categories/update/:id', categoriesCRUD.update);
 app.get("/categories/search/:searchVal", categoriesCRUD.search);
 app.post("/categories/search/", categoriesCRUD.search);
 
-
-
-// app.post('/functions/categoriesCRUD', categoriesCRUD.add);
-
-// app.get('/users', usersCRUD.show);
+app.get('/users', usersCRUD.show);
 app.get('/users/addUser', usersCRUD.showAdd);
 app.post('/users/addUser', usersCRUD.add);
 app.get('/users/delete/:id', usersCRUD.delete);
@@ -379,4 +256,3 @@ app.get('/users/editUsers/:id', usersCRUD.get);
 app.post('/users/update/:id', usersCRUD.update);
 app.get("/users/search/:searchVal", usersCRUD.search);
 app.post("/users/search", usersCRUD.search);
-// app.get('/users/search/:searchVal', users.search);

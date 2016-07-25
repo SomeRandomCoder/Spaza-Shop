@@ -11,6 +11,23 @@ exports.showAdd = function(req, res){
 	});
 };
 
+exports.show= function(req, res){
+  req.getConnection(function(err, connection) {
+
+      if (err) return next(err);
+      connection.query("SELECT   DATE_FORMAT(sales.date,'%d %b %y') as date,sales.id, sales.product_id, sales.sold, sales.price ,products.product FROM sales, products WHERE sales.product_id = products.id AND sales.sold > 0 ORDER BY `sales`.`date` ASC ", function(err, data) {
+            if (err) return next(err);
+          if (err) return next(err);
+          res.render("sales", {
+              sales: data,
+              isAdmin: req.session.admin && req.session.username,
+                isUser: !req.session.admin && req.session.username
+          });
+          // connection.end();
+      });
+  });
+};
+
 exports.add = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) return next(err);
