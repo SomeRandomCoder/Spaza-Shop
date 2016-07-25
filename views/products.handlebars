@@ -31,7 +31,9 @@ $(document).ready(function() {
       console.log(searchVal);
       $("#productsSearch").html(results)
     });
-
+    if(searchVal.length === 0){
+      location.reload();
+    }
   })
 
 })

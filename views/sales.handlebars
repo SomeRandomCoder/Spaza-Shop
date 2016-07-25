@@ -32,7 +32,9 @@
           console.log(searchVal);
           $("#salesSearch").html(results)
         });
-
+        if(searchVal.length === 0){
+          location.reload();
+        }
       })
 
     })

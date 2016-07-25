@@ -34,6 +34,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
+app.use(flash());
 
 var dbOptions = {
   host: "127.0.0.1",

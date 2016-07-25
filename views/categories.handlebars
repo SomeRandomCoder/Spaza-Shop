@@ -25,7 +25,9 @@
           console.log(searchVal);
           $("#categoriesSearch").html(results)
         });
-
+        if(searchVal.length === 0){
+          location.reload();
+        }
       })
 
     })
