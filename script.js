@@ -43,7 +43,6 @@ app.use(session({
   saveUninitialized: false
 }));
 
-app.use(myConnection(mysql, dbOptions, "single"));
 
 var dbOptions = {
   host: "127.0.0.1",
@@ -59,6 +58,7 @@ var connection = mysql.createConnection({
   password: "mxmaolqk",
   database: 'nelisaDB'
 });
+app.use(myConnection(mysql, dbOptions, "single"));
 
 var server = app.listen(3000, function() {
   var host = server.address().address;
