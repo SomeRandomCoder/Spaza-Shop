@@ -95,6 +95,7 @@ describe('test the ProductsDataService', function(){
   it("showCategory should return the amount of categories in the table" , function(done){
     var categoriesDataService = new CategoriesDataService(connection);
     categoriesDataService.showCategory(function(err,category){
+      console.log(category[0]);
       assert.equal(9, category.length);
     });
     done();
@@ -105,9 +106,33 @@ describe('test the ProductsDataService', function(){
     var categories = [20, "TestCategory"];
     categoriesDataService.addCategory([categories],function(err,rows){
       var AddCategorytest = rows.affectedRows;
+      // console.log(AddCategorytest);
       assert.equal(1,AddCategorytest);
     });
     done();
   });
+
+  // it("updateCategory should update a row in the categories table in the Database",function(done){
+  //   var categoriesDataService= new CategoriesDataService(connection);
+  //   var category = {
+  //     id:20,
+  //     category:"TestCategory"
+  //   };
+  //   categoriesDataService.updateCategory(category, function(rows){
+  //     var updatedCategory = rows.affectedRows;
+  //     console.log(updatedCategory);
+  //     assert.equal(1, updatedCategory);
+  //   });
+  //   done();
+  // });
+
+  // it("deleteCategory should delete a row from the database", function(done){
+  //   var categoriesDataService= new CategoriesDataService(connection);
+  //   categoriesDataService.deleteCategory(20,function(rows){
+  //     var deletedTest = rows.changedRows;
+  //     assert.equal(1, deletedTest);
+  //   });
+  //   done();
+  // });
 
 });

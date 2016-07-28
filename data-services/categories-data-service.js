@@ -9,9 +9,10 @@ module.exports = function(connection){
   };
 
   this.showCategory=function(category){
-    connection.query("SELECT categories.id, categories.category FROM categories", [],function(err, categories) {
+    connection.query('SELECT categories.id, categories.category FROM categories', [],function(err, categories) {
       if (err) throw err;
       if(categories.length && categories >0){
+        console.log(categories);
         return categories;
       }
     });
@@ -19,12 +20,27 @@ module.exports = function(connection){
 
   this.addCategory=function(category){
     connection.query('INSERT INTO categories (id, category) VALUES ?', [category], function(err, rows) {
-      if (err) console.log(err);
+      console.log(err);
+      if (err) throw err;
       return rows;
 
   });
 
-
-
 };
+  this.updateCategory=function(categoryID){
+    connection.query('UPDATE categories SET ? WHERE id = 20', [categoryID], function(err, rows){
+      if (err) throw err;
+      return rows;
+    });
+  };
+
+this.deleteCategory=function(categoryID){
+  connection.query("DELETE FROM categories WHERE id = 20",categoryID,function(err,rows){
+    if (err) throw err;
+    return rows;
+  });
+};
+
+
+
 };
