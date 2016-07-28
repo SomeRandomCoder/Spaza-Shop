@@ -21,7 +21,6 @@ module.exports = function(connection){
       this.addProduct = function(product){
         connection.query('INSERT INTO products (id,product,category_id) VALUES ?', [product], function(err,rows){
           if (err) throw err;
-          console.log(rows);
           return  rows;
         });
       };
@@ -43,8 +42,8 @@ module.exports = function(connection){
       };
 
       this.searchProduct = function(searchVal){
-        connection.query('SELECT products.id, products.product FROM products WHERE products.product LIKE = ? ', [searchVal], function(err, result){
-          console.log(searchVal);
+        connection.query('SELECT * FROM products WHERE products.product LIKE = ? ', [searchVal], function(err, result){
+          // console.log(searchVal);
           if (err) throw err;
           return result;
         });

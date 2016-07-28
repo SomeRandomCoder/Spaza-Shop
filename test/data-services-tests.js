@@ -1,18 +1,20 @@
-var ProductsDataService = require('../data-services/products-data-service'),
-CategoriesDataService= require('../data-services/categories-data-service');
+var ProductsDataService = require('../data-services/products-data-service');
+var CategoriesDataService= require('../data-services/categories-data-service');
 var mysql=require('mysql');
 var assert=require('assert');
+
+
+var connection = mysql.createConnection({
+  host: '127.0.0.1',
+  user: 'root',
+  password: "mxmaolqk",
+  database: 'nelisaDB'
+});
 
 describe('test the ProductsDataService', function(){
     // Uncomment the line below and create a connection to your mysql database
     // var connection =
 
-    var connection = mysql.createConnection({
-      host: '127.0.0.1',
-      user: 'root',
-      password: "mxmaolqk",
-      database: 'nelisaDB'
-    });
 
     it('getProduct should return a specific product', function(done){
         var productsDataService = new ProductsDataService(connection);
@@ -57,12 +59,12 @@ describe('test the ProductsDataService', function(){
         });
         done();
     });
-    //
+
     it('deleteProduct should remove a product in the Database', function(done){
         var productsDataService = new ProductsDataService(connection);
         productsDataService.deleteProduct(20,function(rows) {
           var Deletetest= rows.changedRows;
-          console.log(Deletetest);
+          // console.log(Deletetest);
             assert.equal(1, Deletetest);
         });
         done();
@@ -70,31 +72,42 @@ describe('test the ProductsDataService', function(){
 
     it('searchProduct should return the product(s) matching the searchBar value', function(done){
       var productsDataService = new ProductsDataService(connection);
-      var searchVal= "%Bread%";
+      var searchVal= "%" + "Bread" + "%";
         productsDataService.searchProduct(searchVal,function(product){
-          console.log(searchVal);
-          assert.equal(product[0].product, "Bread");
+          // console.log(searchVal);
+          assert.equal("Bread",product.length);
         });
         done();
     });
 
 });
 
-describe('test the CategoriesDataService',function(){
-
-  var connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: "mxmaolqk",
-    database: 'nelisaDB'
-  });
+  describe('test the CategoriesDataService',function(){
 
   it("getCategory should return a specific category", function(done){
     var categoriesDataService = new CategoriesDataService(connection);
     categoriesDataService.getCategory(1, function(err, category){
-      assert.equal(category[0].category, "Fruit");
+      assert.equal(category[0].category, "Bread");
     });
+    done();
+  });
 
+  it("showCategory should return the amount of categories in the table" , function(done){
+    var categoriesDataService = new CategoriesDataService(connection);
+    categoriesDataService.showCategory(function(err,category){
+      assert.equal(9, category.length);
+    });
+    done();
+  });
+
+  it("addCategory should add a category to the categories Table", function(done){
+    var categoriesDataService = new CategoriesDataService(connection);
+    var categories = [20, "TestCategory"];
+    categoriesDataService.addCategory([categories],function(err,rows){
+      var AddCategorytest = rows.affectedRows;
+      assert.equal(1,AddCategorytest);
+    });
+    done();
   });
 
 });
