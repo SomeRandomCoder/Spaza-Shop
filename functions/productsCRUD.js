@@ -12,7 +12,6 @@ exports.showAdd = function(req, res){
 
 exports.show= function(req, res) {
     req.getConnection(function(err, connection) {
-
         if (err) return next(err);
         connection.query("SELECT products.id, products.product ,categories.category FROM products, categories WHERE products.category_id = categories.id  ORDER BY `products`.`id` ASC ", [], function(err, data) {
             if (err) return next(err);
