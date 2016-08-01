@@ -12,7 +12,8 @@ module.exports = function(connection){
       connection.query("SELECT * FROM products ", [], function(err, products) {
             if (err) throw err;
             if (products && products.length > 0){
-              return products;
+              // console.log(products[0]);
+              return products[0];
             }
         });
     };
@@ -21,6 +22,7 @@ module.exports = function(connection){
       this.addProduct = function(product){
         connection.query('INSERT INTO products (id,product,category_id) VALUES ?', [product], function(err,rows){
           if (err) throw err;
+
           return  rows;
         });
       };

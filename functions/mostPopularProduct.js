@@ -8,7 +8,10 @@ exports.mostPopularProduct = function(week) {
 var mpp =  weeklySales.sort(function(a, b) {
     return b.sold - a.sold;
   });
+  // console.log(mpp[0]);
+
   var MostPopularProduct = mpp[0].stockItem;
+
   mostPP.push(MostPopularProduct);
   // console.log(mostPP);
   return mostPP;

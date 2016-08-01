@@ -1,5 +1,6 @@
 var ProductsDataService = require('../data-services/products-data-service');
 var CategoriesDataService= require('../data-services/categories-data-service');
+var PurchasesDataService = require("../data-services/purchases-data-service");
 var mysql=require('mysql');
 var assert=require('assert');
 
@@ -18,9 +19,9 @@ describe('test the ProductsDataService', function(){
 
     it('getProduct should return a specific product', function(done){
         var productsDataService = new ProductsDataService(connection);
-        productsDataService.getProduct(9, function(err, product) {
+        productsDataService.getProduct(0, function(err, product) {
           // console.log(product);
-            assert.equal('Gold Dish Vegetable Curry Can', product[0]);
+            assert.equal('Apples - loose', product[0]);
         });
         done();
     });
@@ -28,7 +29,7 @@ describe('test the ProductsDataService', function(){
     it('showProduct should return the amount of products in the table', function(done){
         var productsDataService = new ProductsDataService(connection);
         productsDataService.showProduct( function(err, product) {
-          // console.log(product.length);
+          console.log(product.length);
             assert.equal(19, product.length);
         });
         done();
@@ -38,8 +39,8 @@ describe('test the ProductsDataService', function(){
         var productsDataService = new ProductsDataService(connection);
         var products = [20, "TestProduct", 3];
         productsDataService.addProduct([products],function(rows) {
+          // console.log(Addtest);
           var Addtest= rows.affectedRows;
-          console.log(Addtest);
             assert.equal(1, Addtest);
         });
         done();
@@ -50,11 +51,11 @@ describe('test the ProductsDataService', function(){
         var products = {
           id:20,
           product:"TestProducts",
-          category_id:2
+          category_id:3
         };
         productsDataService.updateProduct(products,function(rows) {
           var Updatetest= rows.changedRows;
-          console.log(Updatetest);
+          // console.log(Updatetest);
             assert.equal(1, Updatetest);
         });
         done();
@@ -95,16 +96,17 @@ describe('test the ProductsDataService', function(){
   it("showCategory should return the amount of categories in the table" , function(done){
     var categoriesDataService = new CategoriesDataService(connection);
     categoriesDataService.showCategory(function(err,category){
-      console.log(category[0]);
-      assert.equal(9, category.length);
+      console.log(category.length);
+      assert.equal(10, category.length);
     });
     done();
   });
 
-  it("addCategory should add a category to the categories Table", function(done){
-    var categoriesDataService = new CategoriesDataService(connection);
-    var categories = [20, "TestCategory"];
-    categoriesDataService.addCategory([categories],function(err,rows){
+    it("addCategory should add a category to the categories Table", function(done){
+      var categoriesDataService = new CategoriesDataService(connection);
+    var categories = [18,"TestCategory"];
+    // console.log(categories);
+    categoriesDataService.addCategory([categories],function(rows){
       var AddCategorytest = rows.affectedRows;
       // console.log(AddCategorytest);
       assert.equal(1,AddCategorytest);
@@ -112,27 +114,58 @@ describe('test the ProductsDataService', function(){
     done();
   });
 
-  // it("updateCategory should update a row in the categories table in the Database",function(done){
-  //   var categoriesDataService= new CategoriesDataService(connection);
-  //   var category = {
-  //     id:20,
-  //     category:"TestCategory"
-  //   };
-  //   categoriesDataService.updateCategory(category, function(rows){
-  //     var updatedCategory = rows.affectedRows;
-  //     console.log(updatedCategory);
-  //     assert.equal(1, updatedCategory);
-  //   });
-  //   done();
-  // });
+    it("updateCategory should update a row in the categories table in the Database",function(done){
+    var categoriesDataService= new CategoriesDataService(connection);
+    var category = {
+      id:18,
+      category:"TestCategory1"
+    };
+    categoriesDataService.updateCategory(category, function(rows){
+      var updatedCategory = rows.affectedRows;
+      console.log(updatedCategory);
+      assert.equal(1, updatedCategory);
+    });
+    done();
+  });
 
-  // it("deleteCategory should delete a row from the database", function(done){
-  //   var categoriesDataService= new CategoriesDataService(connection);
-  //   categoriesDataService.deleteCategory(20,function(rows){
-  //     var deletedTest = rows.changedRows;
-  //     assert.equal(1, deletedTest);
-  //   });
-  //   done();
-  // });
+  it("deleteCategory should delete a row from the database", function(done){
+    var categoriesDataService= new CategoriesDataService(connection);
+    categoriesDataService.deleteCategory(18,function(rows){
+      var deletedTest = rows.changedRows;
+      assert.equal(1, deletedTest);
+    });
+    done();
+  });
+
+  it('searchCategory should return the product(s) matching the searchBar value', function(done){
+    var categoriesDataService = new CategoriesDataService(connection);
+    var searchVal= "%" + "Fruit" + "%";
+      categoriesDataService.searchCategory(searchVal,function(category){
+        // console.log(searchVal);
+        assert.equal("Fruit",category.length);
+      });
+      done();
+  });
+
+});
+
+describe("test PurchasesDataService", function(){
+
+  it("getPurchase should return a specific purchase", function(done){
+    var purchasesDataService=new PurchasesDataService(connection);
+    purchasesDataService.getPurchase(5,function(purchase){
+      // console.log(purchase[0].StockItem);
+      assert.equal("Coke 500ml", purchase[0]);
+    });
+    done();
+  });
+
+  it("showPurchase should return the amount of purchases in the table" , function(done){
+    var purchasesDataService = new PurchasesDataService(connection);
+    purchasesDataService.showPurchase(function(err,purchase){
+      assert.equal(153, purchase.length);
+    });
+    done();
+  });
 
 });

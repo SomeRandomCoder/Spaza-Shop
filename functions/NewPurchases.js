@@ -45,7 +45,7 @@ connection.connect();
       // console.log(processingArray[x]);
 
     purchases.push([productID,item,quantity,cost,shop,date]);
-    console.log(purchases);
+    // console.log(purchases);
   }
   }
 
