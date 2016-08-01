@@ -655,12 +655,27 @@ describe("mostProfitableProduct",function(){
   });
 });
 //
-// describe("leastPopularCategory", function(){
-//   it("should return the least popular category for each week", function(){
-//     var result=leastPopularCatergory.leastPopularCatergory(1);
-//     assert.equal(result, "Hygiene","Canned_Goods", "Hygiene", "Meat");
-//   });
-// });
+describe("leastPopularCategory", function(){
+  it("should return the least popular category for week 1", function(){
+    var result=leastPopularCatergory.leastPopularCatergory(1);
+    assert.deepEqual(result," Fruit");
+  });
+
+  it("should return the least popular category for week 2", function(){
+    var result=leastPopularCatergory.leastPopularCatergory(2);
+    assert.deepEqual(result," Fruit");
+  });
+
+  it("should return the least popular category for week 3", function(){
+    var result=leastPopularCatergory.leastPopularCatergory(3);
+    assert.deepEqual(result, "Hygiene");
+  });
+
+  it("should return the least popular category for week 4", function(){
+    var result=leastPopularCatergory.leastPopularCatergory(4);
+    assert.deepEqual(result, "Hygiene");
+  });
+});
 // //
 // describe("mostProfitableCategory",function(){
 //   it("should return the most profitable category of each week",function(){
