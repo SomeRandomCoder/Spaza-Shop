@@ -12,7 +12,6 @@ module.exports = function(connection){
     connection.query('SELECT categories.id, categories.category FROM categories', [],function(err, categories) {
       if (err) throw err;
       if(categories.length && categories >0){
-
         return categories;
       }
     });

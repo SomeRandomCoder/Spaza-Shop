@@ -31,13 +31,13 @@ module.exports=function(connection){
   this.updatePurchase  =function(purchasesID){
     connection.query('UPDATE purchases SET ? WHERE id = 250', [purchasesID], function(err, rows){
       // console.log(err);
-      if (err) throw err;
+      if (err) console.log(err);
       return rows;
     });
   };
 
   this.deletePurchase=function(purchaseID){
-    connection.query('DELETE FROM purchases WHERE id = ?', [purchaseID], function(err, rows){
+    connection.query('DELETE FROM purchases WHERE id = 250', [purchaseID], function(err, rows){
       if (err) console.log(err);
       return rows;
     });

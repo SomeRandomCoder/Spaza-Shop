@@ -40,7 +40,7 @@ this.deleteSale=function(saleID){
   });
 };
 
-this.searchCategory = function(searchVal){
+this.searchSale = function(searchVal){
   connection.query('SELECT * FROM sales WHERE sales.id LIKE = ? ', [searchVal], function(err, result){
     // console.log(searchVal);
     if (err) throw err;

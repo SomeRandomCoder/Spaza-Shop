@@ -17,8 +17,10 @@ exports.CategoriesTest=function(){
     var categoriesDataService = new CategoriesDataService(connection);
     categoriesDataService.getCategory(1, function(err, category){
       assert.equal(category[0].category, "Bread");
+      // done();
     });
     done();
+
   });
 
   it("showCategory should return the amount of categories in the table" , function(done){
