@@ -5,7 +5,7 @@ var SalesTest=require("./Sales-Data-Service-Tests");
 var UsersTest=require('./Users-Data-Service-Tests');
 
 var password = process.env.MYSQL_PWD !== undefined ? process.env.MYSQL_PWD : 'mxmaolqk';
-
+console.log(password);
 var connection = mysql.createConnection({
   host: '127.0.0.1',
   user: process.env.MYSQL_USER ||'root',
