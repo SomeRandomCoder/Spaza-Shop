@@ -19,22 +19,22 @@ module.exports = function(connection){
   };
 
   this.addSale = function(sale){
-    connection.query('INSERT INTO sales SET ?', [sale], function(err,rows){
+    connection.query('INSERT INTO sales (id,date,product_id,sold, price) VALUES ?', [sale], function(err,rows){
       if (err) console.log(err);
       // console.log(category);
       return  rows;
     });
   };
 
-  this.updateSale=function(saleID){
-    connection.query('UPDATE sales SET ? WHERE id = ?', [saleID], function(err, rows){
+  this.updateSale=function(sales,saleID){
+    connection.query('UPDATE sales SET ? WHERE id = ?', [sales,saleID], function(err, rows){
       if (err) throw err;
       return rows;
     });
   };
 
 this.deleteSale=function(saleID){
-  connection.query("DELETE FROM sales WHERE id = ?",saleID,function(err,rows){
+  connection.query("DELETE FROM sales WHERE id = ?",[saleID],function(err,rows){
     if (err) throw err;
     return rows;
   });

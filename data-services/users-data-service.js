@@ -34,7 +34,7 @@ module.exports = function(connection){
   };
 
 this.deleteUser=function(UserID){
-  connection.query("DELETE FROM users WHERE id = ?",UserID,function(err,rows){
+  connection.query("DELETE FROM users WHERE id = 25",UserID,function(err,rows){
     if (err) throw err;
     return rows;
   });

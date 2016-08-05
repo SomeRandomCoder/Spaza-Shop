@@ -34,11 +34,9 @@ exports.CategoriesTest=function(){
 
     it("addCategory should add a category to the categories Table", function(done){
       var categoriesDataService = new CategoriesDataService(connection);
-    var categories = [18,"TestCategory"];
-    // console.log(categories);
-    categoriesDataService.addCategory([categories],function(rows){
+      var categories=[21, 'TestCategory'];
+      categoriesDataService.addCategory([categories],function(rows){
       var AddCategorytest = rows.affectedRows;
-      // console.log(AddCategorytest);
       assert.equal(1,AddCategorytest);
     });
     done();
@@ -47,10 +45,9 @@ exports.CategoriesTest=function(){
     it("updateCategory should update a row in the categories table in the Database",function(done){
     var categoriesDataService= new CategoriesDataService(connection);
     var category = {
-      id:18,
       category:"TestCategory1"
     };
-    categoriesDataService.updateCategory(category, function(rows){
+    categoriesDataService.updateCategory(category, 21, function(rows){
       var updatedCategory = rows.affectedRows;
       console.log(updatedCategory);
       assert.equal(1, updatedCategory);
@@ -61,7 +58,8 @@ exports.CategoriesTest=function(){
   //
   it("deleteCategory should delete a row from the database", function(done){
     var categoriesDataService= new CategoriesDataService(connection);
-    categoriesDataService.deleteCategory(18,function(rows){
+    var id=21;
+    categoriesDataService.deleteCategory(id,function(rows){
       var deletedTest = rows.changedRows;
       assert.equal(1, deletedTest);
     });

@@ -16,7 +16,7 @@ describe('test the ProductsDataService', function(){
 
     it('getProduct should return a specific product', function(done){
         var productsDataService = new ProductsDataService(connection);
-        productsDataService.getProduct(0, function(err, product) {
+        productsDataService.getProduct(1, function(err, product) {
           // console.log(product);
             assert.equal('Apples - loose', product[0]);
         });
@@ -46,11 +46,11 @@ describe('test the ProductsDataService', function(){
     it('updateProduct should update a product in the Database', function(done){
         var productsDataService = new ProductsDataService(connection);
         var products = {
-          id:20,
+
           product:"TestProducts",
           category_id:3
         };
-        productsDataService.updateProduct(products,function(rows) {
+        productsDataService.updateProduct(products,20,function(rows) {
           var Updatetest= rows.changedRows;
           // console.log(Updatetest);
             assert.equal(1, Updatetest);
@@ -60,7 +60,8 @@ describe('test the ProductsDataService', function(){
 
     it('deleteProduct should remove a product in the Database', function(done){
         var productsDataService = new ProductsDataService(connection);
-        productsDataService.deleteProduct(20,function(rows) {
+        var id=20;
+        productsDataService.deleteProduct(id,function(rows) {
           var Deletetest= rows.changedRows;
           // console.log(Deletetest);
             assert.equal(1, Deletetest);
@@ -71,7 +72,7 @@ describe('test the ProductsDataService', function(){
     it('searchProduct should return the product(s) matching the searchBar value', function(done){
       var productsDataService = new ProductsDataService(connection);
       var searchVal= "%" + "Bread" + "%";
-        productsDataService.searchProduct(searchVal,function(product){
+        productsDataService.searchProduct([searchVal],function(product){
           // console.log(searchVal);
           assert.equal("Bread",product.length);
 

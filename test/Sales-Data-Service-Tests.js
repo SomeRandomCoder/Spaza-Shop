@@ -29,16 +29,17 @@ it("showSale should return a specific sale from the table", function(done){
     done();
 });
 
-it("addSale should add a sale to the Sales atble in the database", function(done){
+it("addSale should add a sale to the Sales table in the database", function(done){
   var salesDataService= new SalesDataService(connection);
-  var sale={
-    id: 600,
-    date: "2016-01-01",
-    product_id: 3,
-    sold:1,
-    price: 100
-  };
-  salesDataService.addSale(sale,function(err,rows){
+  // var sale={
+  //   id: 600,
+  //   date: "2016-01-01",
+  //   product_id: 3,
+  //   sold:1,
+  //   price: 100
+  // };
+  var sale=[600,"2016-01-01",3,1,100];
+  salesDataService.addSale([sale],function(err,rows){
     var result= rows.affectedRows;
     assert.equal(1,result);
   });
@@ -48,13 +49,12 @@ it("addSale should add a sale to the Sales atble in the database", function(done
 it("updateSale should update a row in the Sales table in the Database", function(done){
   var salesDataService = new SalesDataService(connection);
   var sale={
-    id: 600,
     date: "2016-01-01",
     product_id: 3,
     sold:1,
     price: 101
   };
-  salesDataService.updateSale(sale, function(err, rows){
+  salesDataService.updateSale(sale, 600,function(err, rows){
     var result= rows.affectedRows;
     assert.equal(1,result);
   });
@@ -63,7 +63,8 @@ it("updateSale should update a row in the Sales table in the Database", function
 
 it("deleteSale should delete a row for the database", function(done){
   var salesDataService = new SalesDataService(connection);
-  salesDataService.deleteSale(600,function(row,err){
+  var id=600;
+  salesDataService.deleteSale(id,function(row,err){
     var result= row.changedRows;
     assert.equal(1,result);
   });

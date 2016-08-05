@@ -32,15 +32,16 @@ exports.PurchasesTest=function(){
 
     it("addPurchase should add a purchase to the purchases Database table" , function(done){
       var purchasesDataService = new PurchasesDataService(connection);
-      var purchase={
-        id: 250,
-        product_id:6,
-        StockItem: "Coke 500ml",
-        Quantity: 1,
-        Cost: 1,
-        Shop: "Spar",
-        Date: "2016-01-01"
-      };
+      // var purchase={
+      //   id: 250,
+      //   product_id:6,
+      //   StockItem: "Coke 500ml",
+      //   Quantity: 1,
+      //   Cost: 1,
+      //   Shop: "Spar",
+      //   Date: "2016-01-01"
+      // };
+      var purchase=[250, 6,"Coke 500ml", 1,1,"Spar", "2016-01-01"];
       purchasesDataService.addPurchase([purchase],function(rows){
         var result=rows.affectedRows;
         assert.equal(result,1);
@@ -51,7 +52,6 @@ exports.PurchasesTest=function(){
     it("updatePurchase should update a specific purchase in the purchases Database table" , function(done){
       var purchasesDataService = new PurchasesDataService(connection);
       var purchase={
-        id: 250,
         product_id:6,
         StockItem: "Coke 500ml",
         Quantity: 1,
@@ -60,9 +60,9 @@ exports.PurchasesTest=function(){
         Date: "2016-01-01"
       };
       // var purchase=[180,6,"Coke 500ml",1,1,"Spar", "2016-01-01"];
-      purchasesDataService.updatePurchase(purchase,function(rows){
+      purchasesDataService.updatePurchase(purchase,250,function(rows){
         // console.log(purchase.length);
-        var result=rows.affectedRows;
+        var result=rows.changedRows;
         assert.equal(result,1);
       });
       done();
@@ -70,7 +70,8 @@ exports.PurchasesTest=function(){
 
     it("deletePurchase should delete a row from the Purchases Table", function(done){
       var purchasesDataService= new PurchasesDataService(connection);
-      purchasesDataService.deletePurchase(250,function(rows){
+      var id=250;
+      purchasesDataService.deletePurchase([id],function(rows){
         var deletedTest = rows.changedRows;
         assert.equal(1, deletedTest);
       });

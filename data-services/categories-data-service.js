@@ -20,20 +20,21 @@ module.exports = function(connection){
   this.addCategory = function(category){
     connection.query('INSERT INTO categories (id,category) VALUES ?', [category], function(err,rows){
       if (err) console.log(err);
-      // console.log(category);
+      console.log(category);
       return  rows;
     });
   };
 
-  this.updateCategory=function(categoryID){
-    connection.query('UPDATE categories SET ? WHERE id = ?', [categoryID], function(err, rows){
-      if (err) throw err;
+  this.updateCategory=function(category,categoryID){
+    connection.query('UPDATE categories SET ? WHERE id = ?', [category,categoryID], function(err, rows){
+      if (err) console.log(err);
       return rows;
     });
   };
 
-this.deleteCategory=function(categoryID){
-  connection.query("DELETE FROM categories WHERE id = ?",categoryID,function(err,rows){
+this.deleteCategory = function(CategoryID){
+  connection.query('DELETE FROM categories WHERE id = ?', [CategoryID], function(err,rows){
+    // console.log(err);
     if (err) throw err;
     return rows;
   });

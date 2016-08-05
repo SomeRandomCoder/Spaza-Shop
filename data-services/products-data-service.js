@@ -22,13 +22,12 @@ module.exports = function(connection){
       this.addProduct = function(product){
         connection.query('INSERT INTO products (id,product,category_id) VALUES ?', [product], function(err,rows){
           if (err) throw err;
-
           return  rows;
         });
       };
 
-      this.updateProduct  =function(productID){
-        connection.query('UPDATE products SET ? WHERE id = 20', [productID], function(err, rows){
+      this.updateProduct  =function(products,productID){
+        connection.query('UPDATE products SET ? WHERE id = ?', [products,productID], function(err, rows){
           // console.log(err);
           if (err) throw err;
           return rows;
