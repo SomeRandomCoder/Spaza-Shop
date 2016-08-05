@@ -1,0 +1,8 @@
+.travis.yml:
+
+before_script:
+  - npm install
+  - mysql -u root -e 'create database travis_DB;'
+  - mysql -u root travis_DB < tables.sql
+
+script: mocha
