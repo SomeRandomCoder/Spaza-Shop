@@ -2,14 +2,14 @@ var PurchasesDataService = require("../data-services/purchases-data-service");
 var mysql=require('mysql');
 var assert=require('assert');
 
-var connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: "mxmaolqk",
-  database: 'travis_DB'
-});
+// var connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: "mxmaolqk",
+//   database: 'travis_DB'
+// });
 
-exports.PurchasesTest=function(){
+exports.PurchasesTest=function(connection){
   describe("test PurchasesDataService", function(){
 
     it("getPurchase should return a specific purchase", function(done){

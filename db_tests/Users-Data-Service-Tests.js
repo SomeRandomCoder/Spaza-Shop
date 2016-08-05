@@ -2,14 +2,14 @@ var UsersDataService=require('../data-services/users-data-service');
 var assert=require('assert');
 var mysql=require('mysql');
 
-var connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: "mxmaolqk",
-  database: 'travis_DB'
-});
+// var connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: "mxmaolqk",
+//   database: 'travis_DB'
+// });
 
-exports.UserTests=function(){
+exports.UserTests=function(connection){
 
 describe("UsersDataService tests",function(){
   it("getUser should get a user from the database", function(done){

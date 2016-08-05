@@ -2,14 +2,14 @@ var CategoriesDataService= require('../data-services/categories-data-service');
 var mysql=require('mysql');
 var assert=require('assert');
 
-var connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: "mxmaolqk",
-  database: 'travis_DB'
-});
+// var connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: "mxmaolqk",
+//   database: 'travis_DB'
+// });
 
-exports.CategoriesTest=function(){
+exports.CategoriesTest=function(connection){
 
   describe('test the CategoriesDataService',function(){
 

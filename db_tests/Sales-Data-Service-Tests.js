@@ -2,13 +2,13 @@ var SalesDataService = require("../data-services/sales-data-service");
 var mysql=require('mysql');
 var assert=require('assert');
 
-var connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: "mxmaolqk",
-  database: 'travis_DB'
-});
-exports.SalesTest=function(){
+// var connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: "mxmaolqk",
+//   database: 'travis_DB'
+// });
+exports.SalesTest=function(connection){
 
 
 describe("SalesDataServie Tests", function(){

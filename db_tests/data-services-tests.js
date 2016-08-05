@@ -4,11 +4,21 @@ var PurchasesTest=require("./Purchases-Data-Service-Tests");
 var SalesTest=require("./Sales-Data-Service-Tests");
 var UsersTest=require('./Users-Data-Service-Tests');
 
+var password = process.env.MYSQL_PWD !== undefined ? process.env.MYSQL_PWD : 'mxmaolqk';
+
+var connection = mysql.createConnection({
+  host: '127.0.0.1',
+  user: process.env.MYSQL_USER ||'root',
+  password: password,
+  database: 'travis_DB'
+});
+
+
 var mysql=require('mysql');
 var assert=require('assert');
 
-ProductTests.ProductTests();
-CategoriesTest.CategoriesTest();
-PurchasesTest.PurchasesTest();
-SalesTest.SalesTest();
-UsersTest.UserTests();
+ProductTests.ProductTests(connection);
+CategoriesTest.CategoriesTest(connection);
+PurchasesTest.PurchasesTest(connection);
+SalesTest.SalesTest(connection);
+UsersTest.UserTests(connection);
