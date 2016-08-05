@@ -17,9 +17,9 @@ exports.CategoriesTest=function(connection){
     var categoriesDataService = new CategoriesDataService(connection);
     categoriesDataService.getCategory(1, function(err, category){
       assert.equal(category[0].category, "Bread");
-      // done();
+      done();
     });
-    done();
+    // done();
 
   });
 
@@ -28,8 +28,8 @@ exports.CategoriesTest=function(connection){
     categoriesDataService.showCategory(function(err,category){
       console.log(category.length);
       assert.equal(10, category.length);
+      done();
     });
-    done();
   });
 
     it("addCategory should add a category to the categories Table", function(done){
@@ -40,8 +40,8 @@ exports.CategoriesTest=function(connection){
       var AddCategorytest = rows.affectedRows;
       // console.log(AddCategorytest);
       assert.equal(1,AddCategorytest);
+      done();
     });
-    done();
   });
 
     it("updateCategory should update a row in the categories table in the Database",function(done){
@@ -54,8 +54,8 @@ exports.CategoriesTest=function(connection){
       var updatedCategory = rows.affectedRows;
       console.log(updatedCategory);
       assert.equal(1, updatedCategory);
+      done();
     });
-    done();
   });
 
   //
@@ -64,8 +64,8 @@ exports.CategoriesTest=function(connection){
     categoriesDataService.deleteCategory(18,function(rows){
       var deletedTest = rows.changedRows;
       assert.equal(1, deletedTest);
+      done();
     });
-    done();
   });
 
   it('searchCategory should return the product(s) matching the searchBar value', function(done){
@@ -74,8 +74,8 @@ exports.CategoriesTest=function(connection){
       categoriesDataService.searchCategory(searchVal,function(category){
         // console.log(searchVal);
         assert.equal("Fruit",category.length);
+        done();
       });
-      done();
   });
 });
 
