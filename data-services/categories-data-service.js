@@ -1,53 +1,29 @@
+  var queryBuilder = require('./queryBuilder');
+
 module.exports = function(connection){
-  this.getCategory=function(categoryID){
-    connection.query("SELECT * FROM categories WHERE categories.id = ?",categoryID,function(err, categories){
-      if(err) throw err;
-      if(categories.length && categories >0){
-        return categories[0].category;
-    }
-    });
+  var QueryService = new queryBuilder(connection);
+
+  this.showCategory = function(cb, err) {
+    return QueryService.execute('SELECT categories.id, categories.category FROM categories');
   };
 
-  this.showCategory=function(category){
-    connection.query('SELECT categories.id, categories.category FROM categories', [],function(err, categories) {
-      if (err) throw err;
-      if(categories.length && categories >0){
-        return categories;
-      }
-    });
+  this.getCategory = function(categoryID) {
+    return QueryService.execute('SELECT * FROM categories WHERE categories.id = ?', categoryID);
   };
 
-  this.addCategory = function(category){
-    connection.query('INSERT INTO categories (id,category) VALUES ?', [category], function(err,rows){
-      if (err) console.log(err);
-      console.log(category);
-      return  rows;
-    });
+  this.addCategory = function(category) {
+    return QueryService.execute('INSERT INTO categories SET  ?', [category]);
   };
 
-  this.updateCategory=function(category,categoryID){
-    connection.query('UPDATE categories SET ? WHERE id = ?', [category,categoryID], function(err, rows){
-      if (err) console.log(err);
-      return rows;
-    });
+  this.updateCategory = function(category,categoryID) {
+    return QueryService.execute('UPDATE categories SET ? WHERE id = ?', [category,categoryID]);
   };
 
-this.deleteCategory = function(CategoryID){
-  connection.query('DELETE FROM categories WHERE id = ?', [CategoryID], function(err,rows){
-    // console.log(err);
-    if (err) throw err;
-    return rows;
-  });
-};
+  this.deleteCategory = function(categoryID) {
+    return QueryService.execute('DELETE FROM categories WHERE id = ?', [categoryID]);
+  };
 
-this.searchCategory = function(searchVal){
-  connection.query('SELECT * FROM categories WHERE categories.category LIKE = ? ', [searchVal], function(err, result){
-    // console.log(searchVal);
-    if (err) throw err;
-    return result;
-  });
-};
-
-
-
+  this.searchCategory = function(searchVal) {
+    return QueryService.execute('SELECT * FROM categories WHERE categories.category LIKE ? ', searchVal);
+  };
 };

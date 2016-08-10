@@ -18,7 +18,8 @@
     "bcrypt": "~0.8.7",
     "flash": "~1.1.0",
     "express-flash": "0.0.2",
-    "connection-provider": "~1.0.10"
+    "connection-provider": "~1.0.10",
+    "bluebird": "~3.4.1"
   },
   "devDependencies": {
     "mocha": "2.5.3"

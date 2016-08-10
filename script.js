@@ -8,6 +8,7 @@ var fs = require('fs'),
  bodyParser = require('body-parser'),
  session = require("express-session"),
  bcrypt=require("bcrypt"),
+ bluebird=require('bluebird'),
  flash=require('express-flash');
 
 
