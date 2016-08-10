@@ -9,6 +9,16 @@ var assert=require('assert');
 //   database: 'travis_DB'
 // });
 
+var password = process.env.MYSQL_PWD !== undefined ? process.env.MYSQL_PWD : 'mxmaolqk';
+// console.log(password);
+
+var connection = mysql.createConnection({
+  host: '127.0.0.1',
+  user: process.env.MYSQL_USER ||'root',
+  password: password,
+  database: 'travis_DB'
+});
+
 exports.PurchasesTest=function(){
   describe("test PurchasesDataService", function(){
 

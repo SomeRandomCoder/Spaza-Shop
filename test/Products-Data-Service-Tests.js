@@ -8,6 +8,16 @@ var assert=require('assert');
   //   password: "mxmaolqk",
   //   database: 'travis_DB'
   // });
+
+  var password = process.env.MYSQL_PWD !== undefined ? process.env.MYSQL_PWD : 'mxmaolqk';
+  // console.log(password);
+
+  var connection = mysql.createConnection({
+    host: '127.0.0.1',
+    user: process.env.MYSQL_USER ||'root',
+    password: password,
+    database: 'travis_DB'
+  });
   exports.ProductTests=function(){
 describe('test the ProductsDataService', function(){
     // Uncomment the line below and create a connection to your mysql database
