@@ -4,6 +4,7 @@ var fs = require('fs'),
  app = express(),
  mysql = require('mysql'),
  myConnection = require("express-myconnection"),
+ connectionProvider=require('connection-provider'),
  bodyParser = require('body-parser'),
  session = require("express-session"),
  bcrypt=require("bcrypt"),
@@ -26,6 +27,13 @@ var weeklySales = require('./functions/weeklySales'),
  signup=require("./functions/signup"),
  usersCRUD=require("./functions/users"),
  login=require("./functions/login");
+
+
+var ProductsDataService = require("./data-services/products-data-service"),
+ CategoriesDataService = require("./data-services/categories-data-service"),
+ SalesDataService = require("./data-services/sales-data-service"),
+ PurchasesDataService = require("./data-services/purchases-data-service"),
+UsersDataService = require("./data-services/user-data-service");
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -51,6 +59,17 @@ var dbOptions = {
   port: 3306,
   database: 'nelisaDB'
 };
+
+var setupCallback = function(connection){
+  return {
+    productDataService : new ProductsDataService(connection),
+    categoriesDataService : new CategoriesDataService(connection),
+    salesDataService : new SalesDataService(connection),
+    purchasesDataService : new PurchasesDataService(connection),
+    usersDataService : new UsersDataService(connection)
+  };
+};
+app.use(connectionProvider(dbOptions,setupCallback));
 
 var connection = mysql.createConnection({
   host: '127.0.0.1',
