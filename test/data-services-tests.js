@@ -16,8 +16,8 @@ var connection = mysql.createConnection({
   database: 'travis_DB'
 });
 
-// ProductTests.ProductTests(connection);
-// CategoriesTest.CategoriesTest(connection);
-// PurchasesTest.PurchasesTest(connection);
+ProductTests.ProductTests(connection);
+CategoriesTest.CategoriesTest(connection);
+PurchasesTest.PurchasesTest(connection);
 SalesTest.SalesTest(connection);
 // UsersTest.UserTests(connection);

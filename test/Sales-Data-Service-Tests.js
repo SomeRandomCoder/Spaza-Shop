@@ -22,73 +22,104 @@ exports.SalesTest=function(){
 
 
 describe("SalesDataServie Tests", function(){
+    var salesDataService = new SalesDataService(connection);
+it("getSale should return the product_id of the first sale from the Database", function(done) {
+  // var categoriesDataService = new CategoriesDataService(connection);
+  salesDataService.getSale(1)
+    .then(function(sale) {
+      assert.equal(sale[0].product_id,3);
+      done();
 
- it("getSale should get a specific sale from the Database", function(done){
-  var salesDataService = new SalesDataService(connection);
-  salesDataService.getSale(1,function(result){
-      assert.equal(result,3);
-  });
-  done();
-});
-
-it("showSale should return a specific sale from the table", function(done){
-    var salesDataService= new SalesDataService(connection);
-    salesDataService.showSale(1,function(sale, err){
-      assert.equal(sale.length, 1);
+    })
+    .catch(function(err) {
+      done(err);
     });
-    done();
 });
 
-it("addSale should add a sale to the Sales table in the database", function(done){
-  var salesDataService= new SalesDataService(connection);
-  // var sale={
-  //   id: 600,
-  //   date: "2016-01-01",
-  //   product_id: 3,
-  //   sold:1,
-  //   price: 100
-  // };
-  var sale=[600,"2016-01-01",3,1,100];
-  salesDataService.addSale([sale],function(err,rows){
-    var result= rows.affectedRows;
-    assert.equal(1,result);
-  });
-  done();
+
+it("showSale should return a specific sale from the table", function(done) {
+  // var categoriesDataService = new CategoriesDataService(connection);
+  salesDataService.showSale()
+    .then(function(sale) {
+      assert.equal(sale.length, 444);
+      done();
+
+    })
+    .catch(function(err) {
+      done(err);
+    });
 });
 
-it("updateSale should update a row in the Sales table in the Database", function(done){
-  var salesDataService = new SalesDataService(connection);
+it('addSale should add a sale to the Sales table in the database',function(done){
   var sale={
+    id: 600,
     date: "2016-01-01",
     product_id: 3,
     sold:1,
-    price: 101
+    price: 100
   };
-  salesDataService.updateSale(sale, 600,function(err, rows){
-    var result= rows.affectedRows;
-    assert.equal(1,result);
-  });
-  done();
-});
-
-it("deleteSale should delete a row for the database", function(done){
-  var salesDataService = new SalesDataService(connection);
-  var id=600;
-  salesDataService.deleteSale(id,function(row,err){
-    var result= row.changedRows;
-    assert.equal(1,result);
-  });
-  done();
-});
-
-it("searchSale should return the result(s) that match the search bar value", function(done){
-    var salesDataService= new SalesDataService(connection);
-    var searchVal= "%"+"Bread"+"%";
-    salesDataService.searchSale(searchVal,function(sales){
-      assert.equal(sales.length, "Bread");
-    });
+  salesDataService.addSale(sale)
+  .then(function(rows){
+    var test=rows.affectedRows;
+    assert.equal(test,1);
     done();
+  })
+  .catch(function(err){
+    done(err);
+  });
+
 });
+
+
+it('updateSale should update a row in the Sales table in the Database',function(done){
+  var sale={
+      date: "2016-01-01",
+      product_id: 3,
+      sold:1,
+      price: 101
+    };
+  salesDataService.updateSale(sale,600)
+  .then(function(rows){
+    var test=rows.changedRows;
+    assert.equal(test,1);
+    done();
+  })
+  .catch(function(err){
+    done(err);
+  });
+});
+
+
+it('deleteSale should delete a row for the database',function(done){
+  // var categoriesDataService=new CategoriesDataService(connection);
+  salesDataService.deleteSale(600)
+  .then(function(rows){
+    var test=rows.affectedRows;
+    assert.equal(test,1);
+    done();
+  })
+  .catch(function(err){
+    done(err);
+  });
+
+});
+
+it("searchSale should return the result(s) that match the search bar value", function(done) {
+
+    var searchVal = "%3%";
+    salesDataService.searchSale(searchVal)
+    .then(function(sale) {
+      // console.log(sale[0].product_id);
+        assert.equal(sale[0].product_id, "5");
+        done();
+      })
+      .catch(function(err) {
+        done(err);
+      });
+});
+
+
+
 
 });
 };
