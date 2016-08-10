@@ -20,4 +20,4 @@ ProductTests.ProductTests(connection);
 CategoriesTest.CategoriesTest(connection);
 PurchasesTest.PurchasesTest(connection);
 SalesTest.SalesTest(connection);
-// UsersTest.UserTests(connection);
+UsersTest.UserTests(connection);

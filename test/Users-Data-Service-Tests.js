@@ -22,34 +22,52 @@ var connection = mysql.createConnection({
 exports.UserTests=function(){
 
 describe("UsersDataService tests",function(){
-  it("getUser should get a user from the database", function(done){
-    var usersDataService= new UsersDataService(connection);
-    usersDataService.getUser(1,function(user){
-      assert.equal(users[0].user, "Nelisa1");
-    });
-    done();
-  });
+  var userDataService = new UsersDataService(connection);
 
-  it("showUser should show the length of the Users Table", function(done){
-      var usersDataService=new UsersDataService(connection);
-      usersDataService.showUser(2,function(users){
-        assert.equal(3,users.length);
+
+  it("getUser should get a user from the database", function(done) {
+    // var categoriesDataService = new CategoriesDataService(connection);
+    userDataService.getUser(1)
+      .then(function(user) {
+        assert.equal(user[0].username,"Nelisa1");
+        done();
+
+      })
+      .catch(function(err) {
+        done(err);
       });
+  });
+
+  it("showUser should show the length of the Users Table", function(done) {
+    // var categoriesDataService = new CategoriesDataService(connection);
+    userDataService.showUser()
+      .then(function(users) {
+        assert.equal(users.length, 2);
+        done();
+
+      })
+      .catch(function(err) {
+        done(err);
+      });
+  });
+
+  it('addUser should add a user to the database table',function(done){
+
+    var user ={id:25, username: "TestUser",password:"123"};
+    userDataService.addUser(user)
+    .then(function(rows){
+      var test=rows.affectedRows;
+      assert.equal(test,1);
       done();
-  });
-
-  it("addUser should add a user to the database table", function(done){
-    var usersDataService=new UsersDataService(connection);
-    var user =[25, "TestUser","123", ];
-    usersDataService.addUser([user],function(row){
-      var rows= row.affectedRows;
-      assert.equal(1,rows);
+    })
+    .catch(function(err){
+      done(err);
     });
-    done();
+
   });
 
-  it("updateUser should update a specific row in the Users Table", function(done){
-    var usersDataService=new UsersDataService(connection);
+
+  it('updateUser should update a specific row in the Users Table',function(done){
     var user ={
 
       username: "TestUser",
@@ -57,30 +75,42 @@ describe("UsersDataService tests",function(){
       admin: 0,
       locked: 1
     };
-    usersDataService.updateUser(user,25, function(row){
-      var rows=row.affectedRows;
-      assert.equal(1, rows);
+    userDataService.updateUser(user,25)
+    .then(function(rows){
+      var test=rows.changedRows;
+      assert.equal(test,1);
+      done();
+    })
+    .catch(function(err){
+      done(err);
     });
-    done();
   });
 
-  it("deleteUser shoudl delete a row from the Users Table in the Database", function(done){
-    var usersDataService= new UsersDataService(connection);
-    var id =25;
-    usersDataService.deleteUser(id,function(row){
-      var rows= row.changedRows;
-      assert.equal(1, rows);
+  it('deleteUser should delete a row from the Users Table in the Database',function(done){
+    // var categoriesDataService=new CategoriesDataService(connection);
+    userDataService.deleteUser(25)
+    .then(function(rows){
+      var test=rows.affectedRows;
+      assert.equal(test,1);
+      done();
+    })
+    .catch(function(err){
+      done(err);
     });
-    done();
+
   });
 
-  it("searchUser should return all result(s) matching the searchVal", function(done){
-    var usersDataService= new UsersDataService(connection);
-    var searchVal = "%"+"Tyron"+"%";
-    usersDataService.searchUser(searchVal,function(user){
-      assert.equal("Tyron",user.length);
-    });
-    done();
+  it("searchUser should return all result(s) matching the searchVal", function(done) {
+      // var categoriesDataService = new CategoriesDataService(connection);
+      var searchVal = "%Nelisa1%";
+     userDataService.searchUser(searchVal)
+      .then(function(user) {
+          assert.equal(user[0].user, "Nelisa1");
+          done();
+        })
+        .catch(function(err) {
+          done(err);
+        });
   });
 
 });
