@@ -6,8 +6,8 @@ var UsersTest=require('./Users-Data-Service-Tests');
 var mysql=require('mysql');
 var assert=require('assert');
 
-var password = process.env.MYSQL_PWD !== undefined ? process.env.MYSQL_PWD : 'mxmaolqk';
-console.log(password);
+var password = process.env.MYSQL_PWD !== null ? process.env.MYSQL_PWD : 'mxmaolqk';
+// console.log(password);
 
 var connection = mysql.createConnection({
   host: '127.0.0.1',
