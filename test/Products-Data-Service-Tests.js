@@ -2,12 +2,12 @@ var ProductsDataService = require('../data-services/products-data-service');
 var mysql=require('mysql');
 var assert=require('assert');
 
-  var connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: "mxmaolqk",
-    database: 'travis_DB'
-  });
+  // var connection = mysql.createConnection({
+  //   host: '127.0.0.1',
+  //   user: 'root',
+  //   password: "mxmaolqk",
+  //   database: 'travis_DB'
+  // });
   exports.ProductTests=function(){
 describe('test the ProductsDataService', function(){
     // Uncomment the line below and create a connection to your mysql database
