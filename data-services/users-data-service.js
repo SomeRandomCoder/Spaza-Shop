@@ -19,22 +19,22 @@ module.exports = function(connection){
   };
 
   this.addUser= function(user){
-    connection.query('INSERT INTO users SET ?', [user], function(err,rows){
+    connection.query('INSERT INTO users (id,username,password) VALUES ?', [user], function(err,rows){
       if (err) console.log(err);
       // console.log(category);
       return  rows;
     });
   };
 
-  this.updateUser=function(UserID){
-    connection.query('UPDATE user SET ? WHERE id = ?', [UserID], function(err, rows){
+  this.updateUser=function(user,UserID){
+    connection.query('UPDATE user SET ? WHERE id = ?', [UserID,user], function(err, rows){
       if (err) throw err;
       return rows;
     });
   };
 
 this.deleteUser=function(UserID){
-  connection.query("DELETE FROM users WHERE id = 25",UserID,function(err,rows){
+  connection.query("DELETE FROM users WHERE id = ?",[UserID],function(err,rows){
     if (err) throw err;
     return rows;
   });

@@ -30,13 +30,8 @@ describe("UsersDataService tests",function(){
 
   it("addUser should add a user to the database table", function(done){
     var usersDataService=new UsersDataService(connection);
-    var user ={
-      id: 25,
-      username: "TestUser",
-      password: "123",
-
-    };
-    usersDataService.addUser(user,function(row){
+    var user =[25, "TestUser","123", ];
+    usersDataService.addUser([user],function(row){
       var rows= row.affectedRows;
       assert.equal(1,rows);
     });
@@ -46,13 +41,13 @@ describe("UsersDataService tests",function(){
   it("updateUser should update a specific row in the Users Table", function(done){
     var usersDataService=new UsersDataService(connection);
     var user ={
-      id: 25,
+
       username: "TestUser",
       password: "123",
       admin: 0,
       locked: 1
     };
-    usersDataService.updateUser([user], function(row){
+    usersDataService.updateUser(user,25, function(row){
       var rows=row.affectedRows;
       assert.equal(1, rows);
     });
@@ -61,7 +56,8 @@ describe("UsersDataService tests",function(){
 
   it("deleteUser shoudl delete a row from the Users Table in the Database", function(done){
     var usersDataService= new UsersDataService(connection);
-    usersDataService.deleteUser(25,function(row){
+    var id =25;
+    usersDataService.deleteUser(id,function(row){
       var rows= row.changedRows;
       assert.equal(1, rows);
     });
