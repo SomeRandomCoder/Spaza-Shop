@@ -1,52 +1,33 @@
+var queryBuilder = require('./queryBuilder');
+
 module.exports = function(connection){
-    this.getProduct = function(productId){
-        connection.query('select * from products where products.id = ?', productId, function(err, products){
-            if (err) throw err;
-            if (products && products.length > 0){
-                return  products[0].product;
-            }
-        });
-    };
-
-    this.showProduct = function(){
-      connection.query("SELECT * FROM products ", [], function(err, products) {
-            if (err) throw err;
-            if (products && products.length > 0){
-              // console.log(products[0]);
-              return products[0];
-            }
-        });
-    };
+  var QueryService = new queryBuilder(connection);
 
 
-      this.addProduct = function(product){
-        connection.query('INSERT INTO products (id,product,category_id) VALUES ?', [product], function(err,rows){
-          if (err) throw err;
-          return  rows;
-        });
-      };
+  this.getProduct = function(productID) {
+    return QueryService.execute('select * from products where products.id = ?', productID);
+  };
+  this.showProduct = function(cb, err) {
+    return QueryService.execute('SELECT * FROM products ');
+  };
+  this.addProduct = function(product) {
+    return QueryService.execute('INSERT INTO products SET ?', [product]);
+  };
+  this.updateProduct = function(products, productID) {
+    return QueryService.execute('UPDATE products SET ? WHERE id = ?', [products,productID]);
+  };
+  this.deleteProduct = function( productID) {
+    return QueryService.execute('DELETE FROM products WHERE id = ?', [productID]);
+  };
+  this.searchProduct = function(searchVal) {
+    return QueryService.execute('SELECT * FROM products WHERE products.product LIKE ? ', [searchVal]);
+  };
 
-      this.updateProduct  =function(products,productID){
-        connection.query('UPDATE products SET ? WHERE id = ?', [products,productID], function(err, rows){
-          // console.log(err);
-          if (err) throw err;
-          return rows;
-        });
-      };
-
-      this.deleteProduct = function(productID){
-        connection.query('DELETE FROM products WHERE id = ?', [productID], function(err,rows){
-          // console.log(err);
-          if (err) throw err;
-          return rows;
-        });
-      };
-
-      this.searchProduct = function(searchVal){
-        connection.query('SELECT * FROM products WHERE products.product LIKE = ? ', [searchVal], function(err, result){
-          // console.log(searchVal);
-          if (err) throw err;
-          return result;
-        });
-      };
+      // this.searchProduct = function(searchVal){
+      //   connection.query('SELECT * FROM products WHERE products.product LIKE = ? ', [searchVal], function(err, result){
+      //     // console.log(searchVal);
+      //     if (err) throw err;
+      //     return result;
+      //   });
+      // };
 };

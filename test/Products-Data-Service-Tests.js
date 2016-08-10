@@ -20,74 +20,107 @@ var assert=require('assert');
   });
   exports.ProductTests=function(){
 describe('test the ProductsDataService', function(){
-    // Uncomment the line below and create a connection to your mysql database
-    // var connection =
+  var productsDataService = new ProductsDataService(connection);
 
+    it("getProduct should return a specific product", function(done) {
+      // var categoriesDataService = new CategoriesDataService(connection);
+      productsDataService.getProduct(1)
+        .then(function(product) {
+          assert.equal(product[0].product, "Apples - loose");
+          done();
 
-    it('getProduct should return a specific product', function(done){
-        var productsDataService = new ProductsDataService(connection);
-        productsDataService.getProduct(1, function(err, product) {
-          // console.log(product);
-            assert.equal('Apples - loose', product[0]);
+        })
+        .catch(function(err) {
+          done(err);
         });
-        done();
-    });
+  });
 
-    it('showProduct should return the amount of products in the table', function(done){
-        var productsDataService = new ProductsDataService(connection);
-        productsDataService.showProduct( function(err, product) {
-          console.log(product.length);
-            assert.equal(19, product.length);
+    it("showProduct should return the amount of products in the table", function(done) {
+      // var categoriesDataService = new CategoriesDataService(connection);
+      productsDataService.showProduct()
+        .then(function(product) {
+          assert.equal(product.length, 19);
+          done();
+
+        })
+        .catch(function(err) {
+          done(err);
         });
-        done();
-    });
+  });
 
-    it('addProduct should add a product to the database', function(done){
-        var productsDataService = new ProductsDataService(connection);
-        var products = [20, "TestProduct", 3];
-        productsDataService.addProduct([products],function(rows) {
-          // console.log(Addtest);
-          var Addtest= rows.affectedRows;
-            assert.equal(1, Addtest);
-        });
-        done();
-    });
 
-    it('updateProduct should update a product in the Database', function(done){
-        var productsDataService = new ProductsDataService(connection);
-        var products = {
-
-          product:"TestProducts",
-          category_id:3
-        };
-        productsDataService.updateProduct(products,20,function(rows) {
-          var Updatetest= rows.changedRows;
-          // console.log(Updatetest);
-            assert.equal(1, Updatetest);
-        });
-        done();
-    });
-
-    it('deleteProduct should remove a product in the Database', function(done){
-        var productsDataService = new ProductsDataService(connection);
-        var id=20;
-        productsDataService.deleteProduct(id,function(rows) {
-          var Deletetest= rows.changedRows;
-          // console.log(Deletetest);
-            assert.equal(1, Deletetest);
-        });
-        done();
-    });
-
-    it('searchProduct should return the product(s) matching the searchBar value', function(done){
+    it('addProduct should add a product to the database',function(done){
+      // var products = [20, "TestProduct", 3]
+      var product={id:20, product:'TestProduct', category_id: 3};
       var productsDataService = new ProductsDataService(connection);
-      var searchVal= "%" + "Bread" + "%";
-        productsDataService.searchProduct([searchVal],function(product){
-          // console.log(searchVal);
-          assert.equal("Bread",product.length);
 
-        });
+      productsDataService.addProduct(product)
+      .then(function(rows){
+        var test=rows.affectedRows;
+        assert.equal(test,1);
         done();
+      })
+      .catch(function(err){
+        done(err);
+      });
+
+    });
+
+    it('updateProduct should update a product in the Database',function(done){
+      var products = {
+
+           product:"TestProducts",
+           category_id:4
+         };
+      productsDataService.updateProduct(products,20)
+      .then(function(rows){
+        var test=rows.changedRows;
+        assert.equal(test,1);
+        done();
+      })
+      .catch(function(err){
+        done(err);
+      });
+
+    });
+
+
+    it('deleteCategory should delete a row from the database',function(done){
+      // var categoriesDataService=new CategoriesDataService(connection);
+      productsDataService.deleteProduct(20)
+      .then(function(rows){
+        var test=rows.affectedRows;
+        assert.equal(test,1);
+        done();
+      })
+      .catch(function(err){
+        done(err);
+      });
+
+    });
+
+    // it('searchProduct should return the product(s) matching the searchBar value', function(done){
+    //   var productsDataService = new ProductsDataService(connection);
+    //   var searchVal= "%" + "Bread" + "%";
+    //     productsDataService.searchProduct([searchVal],function(product){
+    //       // console.log(searchVal);
+    //       assert.equal("Bread",product.length);
+    //
+    //     });
+    //     done();
+    // });
+
+    it("searchProduct should return the product(s) matching the searchBar value", function(done) {
+        // var categoriesDataService = new CategoriesDataService(connection);
+        var searchVal = "%Bread%";
+        productsDataService.searchProduct(searchVal)
+        .then(function(product) {
+            assert.equal(product[0].product, "Bread");
+            done();
+          })
+          .catch(function(err) {
+            done(err);
+          });
     });
 
 });
