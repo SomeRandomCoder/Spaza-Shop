@@ -22,12 +22,4 @@ module.exports = function(connection){
   this.searchProduct = function(searchVal) {
     return QueryService.execute('SELECT * FROM products WHERE products.product LIKE ? ', [searchVal]);
   };
-
-      // this.searchProduct = function(searchVal){
-      //   connection.query('SELECT * FROM products WHERE products.product LIKE = ? ', [searchVal], function(err, result){
-      //     // console.log(searchVal);
-      //     if (err) throw err;
-      //     return result;
-      //   });
-      // };
 };
