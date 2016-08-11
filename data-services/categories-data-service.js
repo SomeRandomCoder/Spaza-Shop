@@ -4,18 +4,19 @@ module.exports = function(connection){
   var QueryService = new queryBuilder(connection);
 
   this.showCategory = function(cb, err) {
-    return QueryService.execute('SELECT categories.id, categories.category FROM categories');
+    return QueryService.execute('SELECT * FROM categories');
   };
 
   this.getCategory = function(categoryID) {
-    return QueryService.execute('SELECT * FROM categories WHERE categories.id = ?', categoryID);
+    return QueryService.execute('SELECT * FROM categories WHERE id = ?', categoryID);
+    
   };
 
   this.addCategory = function(category) {
     return QueryService.execute('INSERT INTO categories SET  ?', [category]);
   };
 
-  this.updateCategory = function(category,categoryID) {
+  this.updateCategory = function(categoryID, category) {
     return QueryService.execute('UPDATE categories SET ? WHERE id = ?', [category,categoryID]);
   };
 

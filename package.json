@@ -19,7 +19,9 @@
     "flash": "~1.1.0",
     "express-flash": "0.0.2",
     "connection-provider": "~1.0.10",
-    "bluebird": "~3.4.1"
+    "bluebird": "~3.4.1",
+    "bcryptjs": "~2.3.0",
+    "co": "~4.6.0"
   },
   "devDependencies": {
     "mocha": "2.5.3"

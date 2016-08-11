@@ -1,5 +1,5 @@
 // var admin = document.getElementById("adminSwitch");
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 exports.show = function(req, res, next) {
     req.getConnection(function(err, connection) {
@@ -35,7 +35,7 @@ exports.showAdd = function(req, res) {
 
 exports.show=function(req, res){
   req.getConnection(function(err, connection) {
-      
+
       if (err) return next(err);
         connection.query("SELECT users.id, users.username, users.locked, users.admin FROM users ORDER BY users.id", function(err, data) {
             if (err) return next(err);

@@ -7,7 +7,7 @@ var fs = require('fs'),
  connectionProvider=require('connection-provider'),
  bodyParser = require('body-parser'),
  session = require("express-session"),
- bcrypt=require("bcrypt"),
+ bcrypt=require("bcryptjs"),
  bluebird=require('bluebird'),
  flash=require('express-flash');
 
@@ -34,7 +34,7 @@ var ProductsDataService = require("./data-services/products-data-service"),
  CategoriesDataService = require("./data-services/categories-data-service"),
  SalesDataService = require("./data-services/sales-data-service"),
  PurchasesDataService = require("./data-services/purchases-data-service"),
-UsersDataService = require("./data-services/user-data-service");
+UsersDataService = require("./data-services/users-data-service");
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -70,7 +70,7 @@ var setupCallback = function(connection){
     usersDataService : new UsersDataService(connection)
   };
 };
-app.use(connectionProvider(dbOptions,setupCallback));
+// app.use(connectionProvider(dbOptions,setupCallback));
 
 var connection = mysql.createConnection({
   host: '127.0.0.1',
