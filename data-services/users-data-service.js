@@ -2,8 +2,8 @@ var queryBuilder = require('./queryBuilder');
 module.exports = function(connection){
   var QueryService = new queryBuilder(connection);
 
-  this.getUser = function(saleID) {
-    return QueryService.execute("SELECT * FROM sales WHERE sales.id = ?",saleID);
+  this.getUser = function(userID) {
+    return QueryService.execute("SELECT * FROM users WHERE users.id = ?",userID);
   };
 
 
@@ -24,7 +24,7 @@ module.exports = function(connection){
   };
 
   this.searchUser = function( searchVal) {
-    return QueryService.execute('SELECT * FROM users WHERE users.id LIKE  ? ', [searchVal]);
+    return QueryService.execute('SELECT * FROM users WHERE users.username LIKE  ? ', [searchVal]);
   };
 
 

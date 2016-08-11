@@ -27,7 +27,7 @@ describe("UsersDataService tests",function(){
 
   it("getUser should get a user from the database", function(done) {
     // var categoriesDataService = new CategoriesDataService(connection);
-    userDataService.getUser(1)
+    userDataService.getUser(16)
       .then(function(user) {
         assert.equal(user[0].username,"Nelisa1");
         done();
@@ -105,7 +105,7 @@ describe("UsersDataService tests",function(){
       var searchVal = "%Nelisa1%";
      userDataService.searchUser(searchVal)
       .then(function(user) {
-          assert.equal(user[0].user, "Nelisa1");
+          assert.equal(user[0].username, "Nelisa1");
           done();
         })
         .catch(function(err) {
