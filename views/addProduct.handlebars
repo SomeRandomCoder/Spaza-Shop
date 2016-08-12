@@ -2,7 +2,7 @@
 	<h1>Add Product</h1>
 	<form action="/products/addProduct" method="POST">
 	<div class="">
-	<label>Category</label>
+	<h4>Category</h4>
 	<select class="browser-default" name="category_id">
 		{{#categories}}
 			<option value="{{id}}">{{category}}</options>
@@ -12,9 +12,10 @@
 
 
 	<div class="">
-    <label>Product</label>
-    <input type="text" name="product" value="{{data.product}}">
+    <h4>Product</h4>
+    <input type="text" name="product">
 	</div>
-	<input type="submit" value="Add Product">
+<input
+	<button type="submit" value="Add Product" class="btn btn-primary"></button>
 </form>
 </div>
