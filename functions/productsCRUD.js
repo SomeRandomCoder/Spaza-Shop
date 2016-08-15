@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
   host: '127.0.0.1',
   user: process.env.MYSQL_USER ||'root',
   password: password,
-  database: 'travis_DB'
+  database: 'nelisaDB'
 });
 
 exports.showAdd = function(req, res){

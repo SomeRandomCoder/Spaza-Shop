@@ -27,7 +27,9 @@ module.exports = function(connection){
   };
 
   this.searchSale = function( searchVal) {
-    return QueryService.execute('SELECT * FROM sales WHERE sales.id LIKE  ? ', [searchVal]);
+    // return QueryService.execute('SELECT * FROM sales WHERE sales.id LIKE  ? ', [searchVal]);
+    return QueryService.execute('SELECT sales.id, DATE_FORMAT(sales.date, "%d %b %y")as date,sales.sold, sales.price, products.product FROM sales INNER JOIN products ON sales.product_id = products.id WHERE products.product LIKE ?', [searchVal]);
+
   };
 
 

@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
   host: '127.0.0.1',
   user: process.env.MYSQL_USER ||'root',
   password: password,
-  database: 'travis_DB'
+  database: 'nelisaDB'
 });
 
 exports.showAdd = function(req, res){
@@ -145,12 +145,11 @@ exports.get = function(req, res, next){
     var productsDataService = new ProductsDataService(connection);
 
 			var sales = yield salesDataService.showSale();
-
     	var products = yield productsDataService.showProduct();
     // var results = yield salesDataService.getSale(id);
       try {
         var join = Promise.join(sales,products, function(result){
-
+					console.log(result);
 				res.render('editSales', {
           data: result[0],
           sales: products,
@@ -166,45 +165,90 @@ exports.get = function(req, res, next){
 
 exports.update = function(req, res, next){
 
-	var data = {
-    date: req.body.date,
-    product_id : Number(req.body.product_id),
-    sold: Number(req.body.sold),
-    price: Number(req.body.price),
-		};
-		var id = req.params.id;
-  	req.getConnection(function(err, connection){
-		if (err) return next(err);
-		connection.query('UPDATE sales SET ? WHERE id = ?', [data, id], function(err, rows){
-			if (err) return next(err);
-      		res.redirect('/sales');
-		});
-    });
+	// var data = {
+  //   date: req.body.date,
+  //   product_id : Number(req.body.product_id),
+  //   sold: Number(req.body.sold),
+  //   price: Number(req.body.price),
+	// 	};
+	// 	var id = req.params.id;
+  // 	req.getConnection(function(err, connection){
+	// 	if (err) return next(err);
+	// 	connection.query('UPDATE sales SET ? WHERE id = ?', [data, id], function(err, rows){
+	// 		if (err) return next(err);
+  //     		res.redirect('/sales');
+	// 	});
+  //   });
+
+  co(function* (){
+      var salesDataService=new SalesDataService(connection);
+      try{
+        var data={
+          date: req.body.date,
+            product_id : Number(req.body.product_id),
+            sold: Number(req.body.sold),
+            price: Number(req.body.price),
+        };
+        var id= req.params.id;
+        var results= yield salesDataService.updateSale(data, id);
+        res.redirect("/sales");
+    }
+    catch(err){
+        console.log(err);
+    }
+});
 };
 
 exports.delete = function(req, res, next){
-	var id = req.params.id;
-	req.getConnection(function(err, connection){
-		connection.query('DELETE FROM sales WHERE id = ?', [id], function(err,rows){
-			if(err) return next(err);
-			res.redirect('/sales');
-		});
-	});
+	// var id = req.params.id;
+	// req.getConnection(function(err, connection){
+	// 	connection.query('DELETE FROM sales WHERE id = ?', [id], function(err,rows){
+	// 		if(err) return next(err);
+	// 		res.redirect('/sales');
+	// 	});
+	// });
+  co(function*(){
+  var id = req.params.id;
+        var salesDataService=new SalesDataService(connection);
+        try{
+          var results= yield salesDataService.deleteSale(id);
+          res.redirect("/sales");
+      }
+      catch(err){
+          console.log(err);
+      }
+  });
 };
 
 exports.search = function(req, res, next){
-  req.getConnection(function(err, connection) {
+  // req.getConnection(function(err, connection) {
+  //   var searchVal = '%'+ req.params.searchVal +'%';
+  //   connection.query('SELECT sales.id, DATE_FORMAT(sales.date, "%d %b %y")as date,sales.sold, sales.price, products.product FROM sales INNER JOIN products ON sales.product_id = products.id WHERE products.product LIKE ?', [searchVal], function(err, result){
+  //     if(err) return console.log(err);
+	// 		console.log(searchVal);
+  //     res.render('salesSearch',{
+  //       search : result,
+	// 			isAdmin: req.session.admin,
+	// 			isUser: req.session.username,
+	// 			layout: false
+  //
+  //     });
+  //   });
+  // });
+  co(function*() {
+		var salesDataService=new SalesDataService(connection);
     var searchVal = '%'+ req.params.searchVal +'%';
-    connection.query('SELECT sales.id, DATE_FORMAT(sales.date, "%d %b %y")as date,sales.sold, sales.price, products.product FROM sales INNER JOIN products ON sales.product_id = products.id WHERE products.product LIKE ?', [searchVal], function(err, result){
-      if(err) return console.log(err);
-			console.log(searchVal);
-      res.render('salesSearch',{
-        search : result,
-				isAdmin: req.session.admin,
-				isUser: req.session.username,
-				layout: false
 
-      });
-    });
-  });
+      try {
+        var results = yield salesDataService.searchSale([searchVal]);
+        res.render('salesSearch', {
+          search: results,
+          admin: req.session.admintab,
+          user: req.session.username,
+          layout: false
+        });
+      } catch (err) {
+          console.log(err);
+      }
+});
 };
